@@ -7,9 +7,8 @@ async function main() {
   const dividendTypes = ['Rendimento', 'Reembolso']
 
   for (let i = 0; i < dividendTypes.length; i++) {
-    const id = i + 1
     const result = await prisma.dividendType.upsert({
-      where: { id },
+      where: { id: i + 1},
       update: {},
       create: {
         name: dividendTypes[i],

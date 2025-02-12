@@ -33,8 +33,8 @@ CREATE TABLE "Dividend" (
     "id" TEXT NOT NULL,
     "tickerId" TEXT NOT NULL,
     "institutionId" TEXT NOT NULL,
-    "quantity" DOUBLE PRECISION NOT NULL,
-    "price" DOUBLE PRECISION NOT NULL,
+    "quantity" DOUBLE PRECISION,
+    "price" DOUBLE PRECISION,
     "total" DOUBLE PRECISION NOT NULL,
     "paymentAt" TIMESTAMP(3) NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -42,6 +42,33 @@ CREATE TABLE "Dividend" (
     "dividendTypeId" INTEGER,
 
     CONSTRAINT "Dividend_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "MovementType" (
+    "id" SERIAL NOT NULL,
+    "name" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "MovementType_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Movement" (
+    "id" TEXT NOT NULL,
+    "tickerId" TEXT NOT NULL,
+    "quantity" DOUBLE PRECISION NOT NULL,
+    "price" DOUBLE PRECISION,
+    "total" DOUBLE PRECISION,
+    "movementTypeId" INTEGER NOT NULL,
+    "institutionId" TEXT NOT NULL,
+    "expiredAt" TIMESTAMP(3) NOT NULL,
+    "movementAt" TIMESTAMP(3) NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Movement_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -55,3 +82,12 @@ ALTER TABLE "Dividend" ADD CONSTRAINT "Dividend_institutionId_fkey" FOREIGN KEY 
 
 -- AddForeignKey
 ALTER TABLE "Dividend" ADD CONSTRAINT "Dividend_dividendTypeId_fkey" FOREIGN KEY ("dividendTypeId") REFERENCES "DividendType"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Movement" ADD CONSTRAINT "Movement_tickerId_fkey" FOREIGN KEY ("tickerId") REFERENCES "Ticker"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Movement" ADD CONSTRAINT "Movement_institutionId_fkey" FOREIGN KEY ("institutionId") REFERENCES "Institution"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Movement" ADD CONSTRAINT "Movement_movementTypeId_fkey" FOREIGN KEY ("movementTypeId") REFERENCES "MovementType"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -19,6 +19,7 @@ model Ticker {
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   dividends Dividend[]
+  Movement  Movement[]
 }
 
 model Institution {
@@ -27,6 +28,7 @@ model Institution {
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   dividends Dividend[]
+  Movement  Movement[]
 }
 
 model DividendType {
@@ -41,8 +43,8 @@ model Dividend {
   id             String   @id @default(cuid())
   tickerId       String
   institutionId  String
-  quantity       Float
-  price          Float
+  quantity       Float?
+  price          Float?
   total          Float
   paymentAt      DateTime
   createdAt      DateTime @default(now())
@@ -52,4 +54,30 @@ model Dividend {
   ticker       Ticker        @relation(fields: [tickerId], references: [id])
   institution  Institution   @relation(fields: [institutionId], references: [id])
   dividendType DividendType? @relation(fields: [dividendTypeId], references: [id])
+}
+
+model MovementType {
+  id        Int        @id @default(autoincrement())
+  name      String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  movements Movement[]
+}
+
+model Movement {
+  id             String   @id @default(cuid())
+  tickerId       String
+  quantity       Float
+  price          Float?
+  total          Float?
+  movementTypeId Int
+  institutionId  String
+  expiredAt      DateTime
+  movementAt     DateTime
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  ticker       Ticker       @relation(fields: [tickerId], references: [id])
+  institution  Institution  @relation(fields: [institutionId], references: [id])
+  movementType MovementType @relation(fields: [movementTypeId], references: [id])
 }
