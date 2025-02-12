@@ -1,0 +1,55 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Ticker {
+  id        String     @id @unique
+  name      String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  dividends Dividend[]
+}
+
+model Institution {
+  id        String     @id @default(cuid())
+  name      String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  dividends Dividend[]
+}
+
+model DividendType {
+  id        Int        @id @default(autoincrement())
+  name      String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  dividends Dividend[]
+}
+
+model Dividend {
+  id             String   @id @default(cuid())
+  tickerId       String
+  institutionId  String
+  quantity       Float
+  price          Float
+  total          Float
+  paymentAt      DateTime
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  dividendTypeId Int?
+
+  ticker       Ticker        @relation(fields: [tickerId], references: [id])
+  institution  Institution   @relation(fields: [institutionId], references: [id])
+  dividendType DividendType? @relation(fields: [dividendTypeId], references: [id])
+}
