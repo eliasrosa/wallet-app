@@ -46,7 +46,7 @@ model Dividend {
   quantity       Float?
   price          Float?
   total          Float
-  paymentAt      DateTime
+  paymentAt      DateTime @db.Date
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
   dividendTypeId Int?
@@ -57,7 +57,7 @@ model Dividend {
 }
 
 model MovementType {
-  id        Int        @id @default(autoincrement())
+  id        String     @id @default(cuid())
   name      String     @unique
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
@@ -70,7 +70,7 @@ model Movement {
   quantity       Float
   price          Float?
   total          Float?
-  movementTypeId Int
+  movementTypeId String
   institutionId  String
   expiredAt      DateTime
   movementAt     DateTime

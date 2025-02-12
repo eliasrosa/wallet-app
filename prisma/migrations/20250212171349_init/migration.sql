@@ -36,7 +36,7 @@ CREATE TABLE "Dividend" (
     "quantity" DOUBLE PRECISION,
     "price" DOUBLE PRECISION,
     "total" DOUBLE PRECISION NOT NULL,
-    "paymentAt" TIMESTAMP(3) NOT NULL,
+    "paymentAt" DATE NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "dividendTypeId" INTEGER,
@@ -46,7 +46,7 @@ CREATE TABLE "Dividend" (
 
 -- CreateTable
 CREATE TABLE "MovementType" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -61,7 +61,7 @@ CREATE TABLE "Movement" (
     "quantity" DOUBLE PRECISION NOT NULL,
     "price" DOUBLE PRECISION,
     "total" DOUBLE PRECISION,
-    "movementTypeId" INTEGER NOT NULL,
+    "movementTypeId" TEXT NOT NULL,
     "institutionId" TEXT NOT NULL,
     "expiredAt" TIMESTAMP(3) NOT NULL,
     "movementAt" TIMESTAMP(3) NOT NULL,
