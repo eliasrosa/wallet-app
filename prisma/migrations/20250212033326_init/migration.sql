@@ -72,7 +72,19 @@ CREATE TABLE "Movement" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Ticker_id_key" ON "Ticker"("id");
+CREATE UNIQUE INDEX "Ticker_id_key" ON "Ticker"("id" ASC);
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Ticker_name_key" ON "Ticker"("name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Institution_name_key" ON "Institution"("name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "DividendType_name_key" ON "DividendType"("name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "MovementType_name_key" ON "MovementType"("name");
 
 -- AddForeignKey
 ALTER TABLE "Dividend" ADD CONSTRAINT "Dividend_tickerId_fkey" FOREIGN KEY ("tickerId") REFERENCES "Ticker"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

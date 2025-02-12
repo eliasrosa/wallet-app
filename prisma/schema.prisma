@@ -14,8 +14,8 @@ datasource db {
 }
 
 model Ticker {
-  id        String     @id @unique
-  name      String
+  id        String     @id @unique(sort: Asc)
+  name      String     @unique
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   dividends Dividend[]
@@ -24,7 +24,7 @@ model Ticker {
 
 model Institution {
   id        String     @id @default(cuid())
-  name      String
+  name      String     @unique
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   dividends Dividend[]
@@ -33,7 +33,7 @@ model Institution {
 
 model DividendType {
   id        Int        @id @default(autoincrement())
-  name      String
+  name      String     @unique
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   dividends Dividend[]
@@ -58,7 +58,7 @@ model Dividend {
 
 model MovementType {
   id        Int        @id @default(autoincrement())
-  name      String
+  name      String     @unique
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   movements Movement[]
