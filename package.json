@@ -10,6 +10,7 @@
     "db:seed": "npx tsx ./prisma/seed.ts",
     "db:migrate": "npx prisma migrate dev",
     "db:reset": "npx prisma migrate reset --force && npm run db:migrate && npm run db:seed",
+    "db:reset2": "rm -rf prisma/migrations && npx prisma migrate reset --force && npm run db:migrate -- --name init && npm run db:seed",
     "import:dividends": "npx tsx ./src/commands/import-dividends-command.ts"
   },
   "dependencies": {
