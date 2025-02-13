@@ -32,7 +32,7 @@ model Institution {
 }
 
 model DividendType {
-  id        Int        @id @default(autoincrement())
+  id        String     @id @default(cuid())
   name      String     @unique
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
@@ -42,18 +42,18 @@ model DividendType {
 model Dividend {
   id             String   @id @default(cuid())
   tickerId       String
-  institutionId  String
   quantity       Float?
   price          Float?
   total          Float
+  dividendTypeId String
+  institutionId  String
   paymentAt      DateTime @db.Date
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
-  dividendTypeId Int?
 
-  ticker       Ticker        @relation(fields: [tickerId], references: [id])
-  institution  Institution   @relation(fields: [institutionId], references: [id])
-  dividendType DividendType? @relation(fields: [dividendTypeId], references: [id])
+  ticker       Ticker       @relation(fields: [tickerId], references: [id])
+  institution  Institution  @relation(fields: [institutionId], references: [id])
+  dividendType DividendType @relation(fields: [dividendTypeId], references: [id])
 }
 
 model MovementType {

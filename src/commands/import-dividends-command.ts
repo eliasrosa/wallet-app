@@ -1,6 +1,10 @@
 import { PrismaClient } from '@prisma/client'
 import readXlsxFile from 'read-excel-file/node'
 import fs from 'fs'
+import { DividendRepository } from '@/repositories/database/DividendRepository'
+import { DividendTypeRepository } from '@/repositories/database/DividendTypeRepository'
+import { InstitutionRepository } from '@/repositories/database/InstitutionRepository'
+import { TickerRepository } from '@/repositories/database/TickerRepository'
 
 const prisma = new PrismaClient()
 
@@ -59,74 +63,24 @@ async function main() {
       return
     }
 
-    // ticker
     const [tickerId, tickerName] = (row.product as string).split(' - ')
-    console.log(`Ticker: ${tickerId}, Name: ${tickerName}`)
-
-    const ticker = await prisma.ticker.upsert({
-      where: { id: tickerId },
-      update: {
-        name: tickerName
-      },
-      create: {
-        id: tickerId,
-        name: tickerName,
-      }
-    })
-
-    // institution
-    const institutionName = row.institution as string
-    const institution = await prisma.institution.upsert({
-      where: { name: institutionName },
-      update: {},
-      create: {
-        name: institutionName
-      }
-    })
-
-    // payment date
+    const ticker = await (new TickerRepository()).findOrCreate(tickerId, tickerName)
+    const institution = await (new InstitutionRepository()).findOrCreate(row.institution as string)
+    const dividendType = await (new DividendTypeRepository()).findOrCreate(row.type as string)
     const paymentAt = new Date(Date.parse((row.paymentDate as string).split('/').reverse().join('-')))
-
-    // dividend type
-    const dividendTypeName = row.type as string
-    const dividendType = await prisma.dividendType.upsert({
-      where: { name: dividendTypeName },
-      update: {},
-      create: {
-        name: dividendTypeName,
-      }
+    
+    await (new DividendRepository()).create({
+      tickerId: ticker.id,
+      paymentAt: paymentAt,
+      institutionId: institution.id,
+      dividendTypeId: dividendType.id,
+      total: parseFloat(row.total as string),
+      price: parseFloat(row.price as string) || null,
+      quantity: parseFloat(row.quantity as string) || null,
     })
-
-    // dividend
-    const dividend = await prisma.dividend.create({
-      data: {
-        paymentAt: paymentAt,
-        quantity: parseFloat(row.quantity as string) || null,
-        price: parseFloat(row.price as string) || null,
-        total: parseFloat(row.total as string),
-        ticker: {
-          connect: {
-            id: ticker.id
-          }
-        },
-        institution: {
-          connect: {
-            id: institution.id
-          }
-        },
-        dividendType: {
-          connect: {
-            id: dividendType.id
-          }
-        }
-      }
-    })
-
-    console.log(`Ticker: ${tickerId}, PaymentAt: ${row.paymentDate}, Dividend: ${dividend.total}`)
   }
 
   console.log('Dividends imported!')
-
 }
 
 main()

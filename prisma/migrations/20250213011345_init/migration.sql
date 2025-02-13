@@ -20,7 +20,7 @@ CREATE TABLE "Institution" (
 
 -- CreateTable
 CREATE TABLE "DividendType" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -32,14 +32,14 @@ CREATE TABLE "DividendType" (
 CREATE TABLE "Dividend" (
     "id" TEXT NOT NULL,
     "tickerId" TEXT NOT NULL,
-    "institutionId" TEXT NOT NULL,
     "quantity" DOUBLE PRECISION,
     "price" DOUBLE PRECISION,
     "total" DOUBLE PRECISION NOT NULL,
+    "dividendTypeId" TEXT NOT NULL,
+    "institutionId" TEXT NOT NULL,
     "paymentAt" DATE NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "dividendTypeId" INTEGER,
 
     CONSTRAINT "Dividend_pkey" PRIMARY KEY ("id")
 );
@@ -93,7 +93,7 @@ ALTER TABLE "Dividend" ADD CONSTRAINT "Dividend_tickerId_fkey" FOREIGN KEY ("tic
 ALTER TABLE "Dividend" ADD CONSTRAINT "Dividend_institutionId_fkey" FOREIGN KEY ("institutionId") REFERENCES "Institution"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Dividend" ADD CONSTRAINT "Dividend_dividendTypeId_fkey" FOREIGN KEY ("dividendTypeId") REFERENCES "DividendType"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Dividend" ADD CONSTRAINT "Dividend_dividendTypeId_fkey" FOREIGN KEY ("dividendTypeId") REFERENCES "DividendType"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Movement" ADD CONSTRAINT "Movement_tickerId_fkey" FOREIGN KEY ("tickerId") REFERENCES "Ticker"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
