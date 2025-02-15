@@ -4,6 +4,7 @@ import { DividendRepository } from '@/repositories/database/DividendRepository'
 import { InstitutionRepository } from '@/repositories/database/InstitutionRepository'
 import { ReadXlsxFileRespository } from '@/repositories/file/ReadXlsxFileRespository'
 import { DividendTypeRepository } from '@/repositories/database/DividendTypeRepository'
+import objectHash from 'object-hash'
 
 export class ImportDividendsService {
   async execute(filePath: string): Promise<void> {
@@ -24,6 +25,7 @@ export class ImportDividendsService {
         paymentAt: row.paymentAt,
         institutionId: institution.id,
         dividendTypeId: dividendType.id,
+        hash: objectHash(row),
       })
     }
   }

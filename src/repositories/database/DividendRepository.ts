@@ -1,17 +1,20 @@
-import { DividendCreateData, DividendRepositoryInterface } from "@/interfaces/repositories/database/DividendRepositoryInterface";
+import { CreateData, DividendRepositoryInterface } from "@/interfaces/repositories/database/DividendRepositoryInterface";
 import { Dividend, PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient()
 
 export class DividendRepository implements DividendRepositoryInterface {
-  async create(data: DividendCreateData): Promise<Dividend> {
+  async create(data: CreateData): Promise<Dividend> {
     console.log('DividendRepository.create', data);
-    return await prisma.dividend.create({
-      data: {
+    return await prisma.dividend.upsert({
+      where: { hash: data.hash },
+      update: {},
+      create: {
         paymentAt: data.paymentAt,
         quantity: data.quantity,
         price: data.price,
         total: data.total,
+        hash: data.hash,
         ticker: { connect: { id: data.tickerId } },
         institution: { connect: { id: data.institutionId } },
         dividendType: { connect: { id: data.dividendTypeId } }

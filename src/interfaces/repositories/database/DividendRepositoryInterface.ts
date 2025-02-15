@@ -1,6 +1,7 @@
 import { Dividend } from "@prisma/client";
 
 export interface CreateData {
+  hash: string;
   paymentAt: Date;
   quantity?: number | null;
   price?: number | null;

@@ -15,7 +15,7 @@ datasource db {
 
 model Ticker {
   id        String     @id @unique(sort: Asc)
-  name      String     
+  name      String
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   dividends Dividend[]
@@ -47,6 +47,7 @@ model Dividend {
   total          Float
   dividendTypeId String
   institutionId  String
+  hash           String   @unique
   paymentAt      DateTime @db.Date
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
@@ -54,6 +55,8 @@ model Dividend {
   ticker       Ticker       @relation(fields: [tickerId], references: [id])
   institution  Institution  @relation(fields: [institutionId], references: [id])
   dividendType DividendType @relation(fields: [dividendTypeId], references: [id])
+
+  @@index([hash])
 }
 
 model MovementType {
@@ -73,6 +76,7 @@ model Movement {
   isCredit       Boolean
   movementTypeId String
   institutionId  String
+  hash           String   @unique
   movementAt     DateTime
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
@@ -80,4 +84,6 @@ model Movement {
   ticker       Ticker       @relation(fields: [tickerId], references: [id])
   institution  Institution  @relation(fields: [institutionId], references: [id])
   movementType MovementType @relation(fields: [movementTypeId], references: [id])
+
+  @@index([hash])
 }

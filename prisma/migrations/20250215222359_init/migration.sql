@@ -37,6 +37,7 @@ CREATE TABLE "Dividend" (
     "total" DOUBLE PRECISION NOT NULL,
     "dividendTypeId" TEXT NOT NULL,
     "institutionId" TEXT NOT NULL,
+    "hash" TEXT NOT NULL,
     "paymentAt" DATE NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -64,6 +65,7 @@ CREATE TABLE "Movement" (
     "isCredit" BOOLEAN NOT NULL,
     "movementTypeId" TEXT NOT NULL,
     "institutionId" TEXT NOT NULL,
+    "hash" TEXT NOT NULL,
     "movementAt" TIMESTAMP(3) NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -81,7 +83,19 @@ CREATE UNIQUE INDEX "Institution_name_key" ON "Institution"("name");
 CREATE UNIQUE INDEX "DividendType_name_key" ON "DividendType"("name");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Dividend_hash_key" ON "Dividend"("hash");
+
+-- CreateIndex
+CREATE INDEX "Dividend_hash_idx" ON "Dividend"("hash");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "MovementType_name_key" ON "MovementType"("name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Movement_hash_key" ON "Movement"("hash");
+
+-- CreateIndex
+CREATE INDEX "Movement_hash_idx" ON "Movement"("hash");
 
 -- AddForeignKey
 ALTER TABLE "Dividend" ADD CONSTRAINT "Dividend_tickerId_fkey" FOREIGN KEY ("tickerId") REFERENCES "Ticker"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

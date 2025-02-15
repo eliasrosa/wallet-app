@@ -1,4 +1,5 @@
 import fs from 'fs'
+import objectHash from 'object-hash'
 import { TickerRepository } from '@/repositories/database/TickerRepository'
 import { MovementRepository } from '@/repositories/database/MovementRepository'
 import { InstitutionRepository } from '@/repositories/database/InstitutionRepository'
@@ -25,6 +26,7 @@ export class ImportMovementsService {
         movementTypeId: movementType.id,
         institutionId: institution.id,
         movementAt: row.movementAt,
+        hash: objectHash(row),
       })
     }
   }

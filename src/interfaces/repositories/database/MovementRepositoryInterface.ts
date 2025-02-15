@@ -1,6 +1,7 @@
 import { Movement } from "@prisma/client";
 
 export interface CreateData {
+  hash: string;
   tickerId: string;
   quantity: number;
   price?: number;

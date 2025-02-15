@@ -6,11 +6,14 @@ const prisma = new PrismaClient()
 export class MovementRepository implements MovementRepositoryInterface {
   async create(data: CreateData): Promise<Movement> {
     console.log('MovementRepository.create', data);
-    return await prisma.movement.create({
-      data: {
-        quantity: data.quantity,
+    return await prisma.movement.upsert({
+      where: { hash: data.hash },
+      update: {},
+      create: {
+        hash: data.hash,
         price: data.price,
         total: data.total,
+        quantity: data.quantity,
         isCredit: data.isCredit,
         movementAt: data.movementAt,
         ticker: { connect: { id: data.tickerId } },
