@@ -18,4 +18,9 @@ export class DividendRepository implements DividendRepositoryInterface {
       }
     })
   }
+
+  async clearAll(): Promise<void> {
+    console.log('DividendTypeRepository.clearAll');
+    await prisma.dividend.deleteMany()
+  }
 }

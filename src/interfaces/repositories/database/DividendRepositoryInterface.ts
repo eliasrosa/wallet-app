@@ -12,5 +12,6 @@ export interface DividendCreateData {
 
 export interface DividendRepositoryInterface {
   create(data: DividendCreateData): Promise<Dividend>;
+  clearAll(): Promise<void>;
 }
 
