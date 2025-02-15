@@ -15,7 +15,7 @@ datasource db {
 
 model Ticker {
   id        String     @id @unique(sort: Asc)
-  name      String     @unique
+  name      String     
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   dividends Dividend[]
@@ -70,9 +70,9 @@ model Movement {
   quantity       Float
   price          Float?
   total          Float?
+  isCredit       Boolean
   movementTypeId String
   institutionId  String
-  expiredAt      DateTime
   movementAt     DateTime
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt

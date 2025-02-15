@@ -1,6 +1,6 @@
 import { Dividend } from "@prisma/client";
 
-export interface DividendCreateData {
+export interface CreateData {
   paymentAt: Date;
   quantity?: number | null;
   price?: number | null;
@@ -11,7 +11,7 @@ export interface DividendCreateData {
 }
 
 export interface DividendRepositoryInterface {
-  create(data: DividendCreateData): Promise<Dividend>;
+  create(data: CreateData): Promise<Dividend>;
   clearAll(): Promise<void>;
 }
 

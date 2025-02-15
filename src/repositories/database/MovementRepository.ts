@@ -11,11 +11,11 @@ export class MovementRepository implements MovementRepositoryInterface {
         quantity: data.quantity,
         price: data.price,
         total: data.total,
+        isCredit: data.isCredit,
+        movementAt: data.movementAt,
         ticker: { connect: { id: data.tickerId } },
         movementType: { connect: { id: data.movementTypeId } },
         institution: { connect: { id: data.institutionId } },
-        expiredAt: data.expiredAt,
-        movementAt: data.movementAt
       }
     })
   }

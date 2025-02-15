@@ -11,7 +11,7 @@
     "db:migrate": "npx prisma migrate dev",
     "db:reset": "npx prisma migrate reset --force && npm run db:migrate && npm run db:seed",
     "db:reset2": "rm -rf prisma/migrations && npx prisma migrate reset --force && npm run db:migrate -- --name init && npm run db:seed",
-    "import:dividends": "npx tsx ./src/commands/import-dividends-command.ts"
+    "b3:import": "npx tsx ./src/commands/ImportB3FilesCommand.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.3.1",

@@ -5,9 +5,9 @@ export interface CreateData {
   quantity: number;
   price?: number;
   total?: number;
+  isCredit: boolean;
   movementTypeId: string;
   institutionId: string;
-  expiredAt: Date;
   movementAt: Date;
 }
 

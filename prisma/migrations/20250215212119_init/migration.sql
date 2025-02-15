@@ -61,9 +61,9 @@ CREATE TABLE "Movement" (
     "quantity" DOUBLE PRECISION NOT NULL,
     "price" DOUBLE PRECISION,
     "total" DOUBLE PRECISION,
+    "isCredit" BOOLEAN NOT NULL,
     "movementTypeId" TEXT NOT NULL,
     "institutionId" TEXT NOT NULL,
-    "expiredAt" TIMESTAMP(3) NOT NULL,
     "movementAt" TIMESTAMP(3) NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -73,9 +73,6 @@ CREATE TABLE "Movement" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Ticker_id_key" ON "Ticker"("id" ASC);
-
--- CreateIndex
-CREATE UNIQUE INDEX "Ticker_name_key" ON "Ticker"("name");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Institution_name_key" ON "Institution"("name");
