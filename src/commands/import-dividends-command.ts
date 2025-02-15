@@ -1,89 +1,40 @@
 import { PrismaClient } from '@prisma/client'
-import readXlsxFile from 'read-excel-file/node'
-import fs from 'fs'
 import { DividendRepository } from '@/repositories/database/DividendRepository'
 import { DividendTypeRepository } from '@/repositories/database/DividendTypeRepository'
 import { InstitutionRepository } from '@/repositories/database/InstitutionRepository'
 import { TickerRepository } from '@/repositories/database/TickerRepository'
+import fs from 'fs'
+import { ReadXlsxFileRespository } from '@/repositories/file/ReadXlsxFileRespository'
 
 const prisma = new PrismaClient()
 
-async function main() {
-  const filePath = 'data/b3/dividends/proventos-recebidos-2024.xlsx'
-  const fileStream = fs.createReadStream(filePath)
-
-  console.log('Importing dividends...')
+async function main(filePath: string): Promise<void> {
   console.log(`File path: ${filePath}`)
-
-  console.log('Deleting all dividends...')
-  await prisma.dividend.deleteMany()
-
-  console.log('Importing dividends...')
-  const schema = {
-    'Produto': {
-      prop: 'product',
-      type: String
-    },
-    'Pagamento': {
-      prop: 'paymentDate',
-      type: String
-    },
-    'Tipo de Evento': {
-      prop: 'type',
-      type: String
-    },
-    'Instituição': {
-      prop: 'institution',
-      type: String
-    },
-    'Quantidade': {
-      prop: 'quantity',
-      type: String
-    },
-    'Preço unitário': {
-      prop: 'price',
-      type: String
-    },
-    'Valor líquido': {
-      prop: 'total',
-      type: String
-    },
-  }
-
-  const { rows, errors } = await readXlsxFile(fileStream, { schema })
-
-  if (errors.length > 0) {
-    console.error('Errors:', errors)
-    return
-  }
+  await (new DividendRepository()).clearAll()
+  
+  const fileStream = fs.createReadStream(filePath)
+  const rows = await (new ReadXlsxFileRespository()).readDividendFile(fileStream)
 
   for await (const row of rows) {
-
-    if (!row.product) {
-      return
-    }
-
-    const [tickerId, tickerName] = (row.product as string).split(' - ')
-    const ticker = await (new TickerRepository()).findOrCreate(tickerId, tickerName)
-    const institution = await (new InstitutionRepository()).findOrCreate(row.institution as string)
-    const dividendType = await (new DividendTypeRepository()).findOrCreate(row.type as string)
-    const paymentAt = new Date(Date.parse((row.paymentDate as string).split('/').reverse().join('-')))
+    const ticker = await (new TickerRepository()).findOrCreate(row.tickerId, row.tickerName)
+    const institution = await (new InstitutionRepository()).findOrCreate(row.institutionName)
+    const dividendType = await (new DividendTypeRepository()).findOrCreate(row.typeName)
     
     await (new DividendRepository()).create({
+      total: row.total,
+      price: row.price,
       tickerId: ticker.id,
-      paymentAt: paymentAt,
+      quantity: row.quantity,
+      paymentAt: row.paymentAt,
       institutionId: institution.id,
       dividendTypeId: dividendType.id,
-      total: parseFloat(row.total as string),
-      price: parseFloat(row.price as string) || null,
-      quantity: parseFloat(row.quantity as string) || null,
     })
   }
 
   console.log('Dividends imported!')
 }
 
-main()
+main('data/b3/dividends/proventos-recebidos-2024.xlsx')
   .then(async () => {
     await prisma.$disconnect()
   })
