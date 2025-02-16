@@ -14,12 +14,35 @@ datasource db {
 }
 
 model Ticker {
-  id        String     @id @unique(sort: Asc)
-  name      String
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  dividends Dividend[]
-  Movement  Movement[]
+  id         String       @id @unique(sort: Asc)
+  name       String
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  dividends  Dividend[]
+  Movement   Movement[]
+  TickerData TickerData[]
+}
+
+enum SourceEnum {
+  INVEST10
+}
+
+model TickerData {
+  id                 String     @id @default(cuid())
+  source             SourceEnum
+  tickerId           String
+  price              Float
+  dy12m              Float
+  pvp                Float
+  var12m             Float
+  volDayAvg          String
+  lastDividend       Float
+  assetValuePerShare Float
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  ticker Ticker @relation(fields: [tickerId], references: [id])
 }
 
 model Institution {

@@ -4,6 +4,17 @@ import { Ticker, PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient()
 
 export class TickerRepository implements TickerRepositoryInterface {
+
+  async findOrFail(id: string): Promise<Ticker> {
+    console.log('TickerRepository.findOrFail', { id });
+    const ticker = await prisma.ticker.findUnique({ where: { id } })
+    if (!ticker) {
+      throw new Error('Ticker not found')
+    }
+
+    return ticker
+  }
+
   async findOrCreate(symbol: string, name: string): Promise<Ticker> {
     console.log('TickerRepository.findOrCreate', { symbol, name });
 
