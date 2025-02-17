@@ -13,23 +13,32 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Ticker {
-  id         String       @id @unique(sort: Asc)
-  name       String
-  createdAt  DateTime     @default(now())
-  updatedAt  DateTime     @updatedAt
-  dividends  Dividend[]
-  Movement   Movement[]
-  TickerData TickerData[]
+enum TickerType {
+  STOCK
+  FII
+  ETF
+  CDB
 }
 
-enum SourceEnum {
+model Ticker {
+  id           String         @id @unique(sort: Asc)
+  name         String
+  type         TickerType?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  dividends    Dividend[]
+  movements    Movement[]
+  datas        TickerData[]
+  walletTicker WalletTicker[]
+}
+
+enum TickerDataSourceEnum {
   INVEST10
 }
 
 model TickerData {
-  id                 String     @id @default(cuid())
-  source             SourceEnum
+  id                 String               @id @default(cuid())
+  source             TickerDataSourceEnum
   tickerId           String
   price              Float
   dy12m              Float
@@ -51,7 +60,7 @@ model Institution {
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   dividends Dividend[]
-  Movement  Movement[]
+  movements Movement[]
 }
 
 model DividendType {
@@ -109,4 +118,31 @@ model Movement {
   movementType MovementType @relation(fields: [movementTypeId], references: [id])
 
   @@index([hash])
+}
+
+model Wallet {
+  id        String         @id @default(cuid())
+  name      String         @unique
+  goalFII   Float
+  goalStock Float
+  goalETF   Float
+  goalRF    Float
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  tickers   WalletTicker[]
+}
+
+model WalletTicker {
+  tickerId    String   @id
+  walletId    String
+  goal        Float
+  isGoalFixed Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  wallet Wallet @relation(fields: [walletId], references: [id])
+  ticker Ticker @relation(fields: [tickerId], references: [id])
+
+  @@unique([walletId, tickerId])
+  @@index([walletId, isGoalFixed])
 }

@@ -1,11 +1,36 @@
+-- CreateEnum
+CREATE TYPE "TickerType" AS ENUM ('STOCK', 'FII', 'ETF', 'CDB');
+
+-- CreateEnum
+CREATE TYPE "TickerDataSourceEnum" AS ENUM ('INVEST10');
+
 -- CreateTable
 CREATE TABLE "Ticker" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
+    "type" "TickerType",
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Ticker_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "TickerData" (
+    "id" TEXT NOT NULL,
+    "source" "TickerDataSourceEnum" NOT NULL,
+    "tickerId" TEXT NOT NULL,
+    "price" DOUBLE PRECISION NOT NULL,
+    "dy12m" DOUBLE PRECISION NOT NULL,
+    "pvp" DOUBLE PRECISION NOT NULL,
+    "var12m" DOUBLE PRECISION NOT NULL,
+    "volDayAvg" TEXT NOT NULL,
+    "lastDividend" DOUBLE PRECISION NOT NULL,
+    "assetValuePerShare" DOUBLE PRECISION NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "TickerData_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -73,6 +98,32 @@ CREATE TABLE "Movement" (
     CONSTRAINT "Movement_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "Wallet" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "goalFII" DOUBLE PRECISION NOT NULL,
+    "goalStock" DOUBLE PRECISION NOT NULL,
+    "goalETF" DOUBLE PRECISION NOT NULL,
+    "goalRF" DOUBLE PRECISION NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Wallet_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "WalletTicker" (
+    "tickerId" TEXT NOT NULL,
+    "walletId" TEXT NOT NULL,
+    "goal" DOUBLE PRECISION,
+    "isGoalFixed" BOOLEAN NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "WalletTicker_pkey" PRIMARY KEY ("tickerId")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "Ticker_id_key" ON "Ticker"("id" ASC);
 
@@ -97,6 +148,18 @@ CREATE UNIQUE INDEX "Movement_hash_key" ON "Movement"("hash");
 -- CreateIndex
 CREATE INDEX "Movement_hash_idx" ON "Movement"("hash");
 
+-- CreateIndex
+CREATE UNIQUE INDEX "Wallet_name_key" ON "Wallet"("name");
+
+-- CreateIndex
+CREATE INDEX "WalletTicker_walletId_isGoalFixed_idx" ON "WalletTicker"("walletId", "isGoalFixed");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "WalletTicker_walletId_tickerId_key" ON "WalletTicker"("walletId", "tickerId");
+
+-- AddForeignKey
+ALTER TABLE "TickerData" ADD CONSTRAINT "TickerData_tickerId_fkey" FOREIGN KEY ("tickerId") REFERENCES "Ticker"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
 -- AddForeignKey
 ALTER TABLE "Dividend" ADD CONSTRAINT "Dividend_tickerId_fkey" FOREIGN KEY ("tickerId") REFERENCES "Ticker"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
@@ -114,3 +177,9 @@ ALTER TABLE "Movement" ADD CONSTRAINT "Movement_institutionId_fkey" FOREIGN KEY 
 
 -- AddForeignKey
 ALTER TABLE "Movement" ADD CONSTRAINT "Movement_movementTypeId_fkey" FOREIGN KEY ("movementTypeId") REFERENCES "MovementType"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "WalletTicker" ADD CONSTRAINT "WalletTicker_walletId_fkey" FOREIGN KEY ("walletId") REFERENCES "Wallet"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "WalletTicker" ADD CONSTRAINT "WalletTicker_tickerId_fkey" FOREIGN KEY ("tickerId") REFERENCES "Ticker"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

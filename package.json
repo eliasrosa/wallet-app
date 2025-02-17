@@ -11,10 +11,14 @@
     "db:migrate": "npx prisma migrate dev",
     "db:reset": "npx prisma migrate reset --force && npm run db:migrate && npm run db:seed",
     "db:reset2": "rm -rf prisma/migrations && npx prisma migrate reset --force && npm run db:migrate -- --name init && npm run db:seed",
-    "b3:import": "npx tsx ./src/commands/ImportB3FilesCommand.ts"
+    "import:ticker": "npx tsx ./src/commands/ImportTickerDataCommand.ts",
+    "import:b3": "npx tsx ./src/commands/ImportB3FilesCommand.ts",
+    "wallet:create": "npx tsx ./src/commands/WalletCreateCommand.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.3.1",
+    "cheerio": "^1.0.0",
+    "lodash": "^4.17.21",
     "next": "15.1.7",
     "object-hash": "^3.0.0",
     "react": "^19.0.0",
@@ -23,6 +27,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@types/lodash": "^4.17.15",
     "@types/node": "^20",
     "@types/object-hash": "^3.0.6",
     "@types/react": "^19",
