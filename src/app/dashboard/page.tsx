@@ -1,4 +1,6 @@
 import { AppSidebar } from "@/components/app-sidebar"
+import { Component1 } from "@/components/charts/chart-pie1"
+import { Component2 } from "@/components/charts/chart-pie2"
 import { ModeToggle } from "@/components/mode-toogle"
 import {
   SidebarInset,
@@ -21,9 +23,8 @@ export default function Page() {
             <div className="aspect-video rounded-xl bg-muted/50" />
             <div className="aspect-video rounded-xl bg-muted/50" />
             <div className="aspect-video rounded-xl bg-muted/50" />
-          </div>
-          <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min">
-            
+            <Component1 />
+            <Component2 />
           </div>
         </div>
       </SidebarInset>
