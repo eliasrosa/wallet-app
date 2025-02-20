@@ -1,4 +1,4 @@
-import { ReadXlsxFileRespositoryInterface } from '@/interfaces/repositories/file/ReadXlsxFileRespositoryInterface'
+import { ReadXlsxFileRespositoryInterface } from '@/repositories/file-b3/interfaces/ReadXlsxFileRespositoryInterface'
 import { ImportDividendsService } from '@/services/ImportDividendsService'
 import { ImportMovementsService } from '@/services/ImportMovementsService'
 import { container } from '@/app'

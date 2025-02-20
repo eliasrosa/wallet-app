@@ -1,4 +1,4 @@
-import { CreateData, MovementRepositoryInterface } from "@/interfaces/repositories/database/MovementRepositoryInterface";
+import { CreateData, MovementRepositoryInterface } from "@/repositories/database/interfaces/MovementRepositoryInterface";
 import { Movement, PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient()

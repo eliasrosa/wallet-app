@@ -1,4 +1,4 @@
-import { MovementTypeRepositoryInterface } from "@/interfaces/repositories/database/MovementTypeRepositoryInterface";
+import { MovementTypeRepositoryInterface } from "@/repositories/database/interfaces/MovementTypeRepositoryInterface";
 import { Institution, PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient()

@@ -9,15 +9,15 @@ import { MovementRepository } from "./repositories/database/MovementRepository";
 import { InstitutionRepository } from "./repositories/database/InstitutionRepository";
 import { MovementTypeRepository } from "./repositories/database/MovementTypeRepository";
 import { DividendTypeRepository } from "./repositories/database/DividendTypeRepository";
-import { TickerRepositoryInterface } from "./interfaces/repositories/database/TickerRepositoryInterface";
-import { DividendRepositoryInterface } from "./interfaces/repositories/database/DividendRepositoryInterface";
-import { MovementRepositoryInterface } from "./interfaces/repositories/database/MovementRepositoryInterface";
-import { InstitutionRepositoryInterface } from "./interfaces/repositories/database/InstitutionRepositoryInterface";
-import { DividendTypeRepositoryInterface } from "./interfaces/repositories/database/DividendTypeRepositoryInterface";
-import { MovementTypeRepositoryInterface } from "./interfaces/repositories/database/MovementTypeRepositoryInterface";
+import { TickerRepositoryInterface } from "./repositories/database/interfaces/TickerRepositoryInterface";
+import { DividendRepositoryInterface } from "./repositories/database/interfaces/DividendRepositoryInterface";
+import { MovementRepositoryInterface } from "./repositories/database/interfaces/MovementRepositoryInterface";
+import { InstitutionRepositoryInterface } from "./repositories/database/interfaces/InstitutionRepositoryInterface";
+import { DividendTypeRepositoryInterface } from "./repositories/database/interfaces/DividendTypeRepositoryInterface";
+import { MovementTypeRepositoryInterface } from "./repositories/database/interfaces/MovementTypeRepositoryInterface";
 
-import { ReadXlsxFileRespository } from "@/repositories/file/ReadXlsxFileRespository";
-import { ReadXlsxFileRespositoryInterface } from "@/interfaces/repositories/file/ReadXlsxFileRespositoryInterface";
+import { ReadXlsxFileRespository } from "@/repositories/file-b3/ReadXlsxFileRespository";
+import { ReadXlsxFileRespositoryInterface } from "@/repositories/file-b3/interfaces/ReadXlsxFileRespositoryInterface";
 
 const container = new Container()
 const { lazyInject } = getDecorators(container)

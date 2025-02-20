@@ -3,11 +3,11 @@ import objectHash from 'object-hash'
 
 import { TYPES } from '@/types';
 import { injectable, lazyInject } from '@/app';
-import type{ TickerRepositoryInterface } from '@/interfaces/repositories/database/TickerRepositoryInterface'
-import type { DividendRepositoryInterface } from '@/interfaces/repositories/database/DividendRepositoryInterface'
-import type { DividendTypeRepositoryInterface } from '@/interfaces/repositories/database/DividendTypeRepositoryInterface'
-import type { InstitutionRepositoryInterface } from '@/interfaces/repositories/database/InstitutionRepositoryInterface'
-import type { ReadXlsxFileRespositoryInterface } from "@/interfaces/repositories/file/ReadXlsxFileRespositoryInterface";
+import type{ TickerRepositoryInterface } from '@/repositories/database/interfaces/TickerRepositoryInterface'
+import type { DividendRepositoryInterface } from '@/repositories/database/interfaces/DividendRepositoryInterface'
+import type { DividendTypeRepositoryInterface } from '@/repositories/database/interfaces/DividendTypeRepositoryInterface'
+import type { InstitutionRepositoryInterface } from '@/repositories/database/interfaces/InstitutionRepositoryInterface'
+import type { ReadXlsxFileRespositoryInterface } from "@/repositories/file-b3/interfaces/ReadXlsxFileRespositoryInterface";
 
 @injectable()
 export class ImportDividendsService {

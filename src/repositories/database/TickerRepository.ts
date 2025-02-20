@@ -1,4 +1,4 @@
-import { TickerRepositoryInterface } from "@/interfaces/repositories/database/TickerRepositoryInterface";
+import { TickerRepositoryInterface } from "@/repositories/database/interfaces/TickerRepositoryInterface";
 import { Ticker, PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient()

@@ -3,11 +3,11 @@ import objectHash from 'object-hash'
 
 import { TYPES } from '@/types';
 import { injectable, lazyInject } from '@/app';
-import type{ TickerRepositoryInterface } from '@/interfaces/repositories/database/TickerRepositoryInterface'
-import type { InstitutionRepositoryInterface } from '@/interfaces/repositories/database/InstitutionRepositoryInterface'
-import type { ReadXlsxFileRespositoryInterface } from "@/interfaces/repositories/file/ReadXlsxFileRespositoryInterface";
-import type { MovementTypeRepositoryInterface } from '@/interfaces/repositories/database/MovementTypeRepositoryInterface';
-import type { MovementRepositoryInterface } from '@/interfaces/repositories/database/MovementRepositoryInterface';
+import type{ TickerRepositoryInterface } from '@/repositories/database/interfaces/TickerRepositoryInterface'
+import type { InstitutionRepositoryInterface } from '@/repositories/database/interfaces/InstitutionRepositoryInterface'
+import type { ReadXlsxFileRespositoryInterface } from "@/repositories/file-b3/interfaces/ReadXlsxFileRespositoryInterface";
+import type { MovementTypeRepositoryInterface } from '@/repositories/database/interfaces/MovementTypeRepositoryInterface';
+import type { MovementRepositoryInterface } from '@/repositories/database/interfaces/MovementRepositoryInterface';
 
 @injectable()
 export class ImportMovementsService {

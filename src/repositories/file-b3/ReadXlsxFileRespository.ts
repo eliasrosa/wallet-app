@@ -1,4 +1,4 @@
-import { ReadXlsxFileRespositoryInterface, RowDividendFileData, RowMovementFileData } from "@/interfaces/repositories/file/ReadXlsxFileRespositoryInterface";
+import { ReadXlsxFileRespositoryInterface, RowDividendFileData, RowMovementFileData } from "@/repositories/file-b3/interfaces/ReadXlsxFileRespositoryInterface";
 import readXlsxFile from "read-excel-file/node";
 import { Stream } from "stream";
 import path from "path";

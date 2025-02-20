@@ -1,4 +1,4 @@
-import { InstitutionRepositoryInterface } from "@/interfaces/repositories/database/InstitutionRepositoryInterface";
+import { InstitutionRepositoryInterface } from "@/repositories/database/interfaces/InstitutionRepositoryInterface";
 import { Institution, PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient()

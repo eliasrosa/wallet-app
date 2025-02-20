@@ -1,4 +1,4 @@
-import { CreateData, DividendRepositoryInterface } from "@/interfaces/repositories/database/DividendRepositoryInterface";
+import { CreateData, DividendRepositoryInterface } from "@/repositories/database/interfaces/DividendRepositoryInterface";
 import { Dividend, PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient()
