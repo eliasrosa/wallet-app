@@ -11,11 +11,11 @@ import type { MovementRepositoryInterface } from '@/interfaces/repositories/data
 
 @injectable()
 export class ImportMovementsService {
-  @lazyInject(TYPES.ReadXlsxFileRespositoryInterface) private readXlsxFileRespository!: ReadXlsxFileRespositoryInterface
-  @lazyInject(TYPES.InstitutionRepositoryInterface) private institutionRepository!: InstitutionRepositoryInterface
   @lazyInject(TYPES.TickerRepositoryInterface) private tickerRepository!: TickerRepositoryInterface
-  @lazyInject(TYPES.MovementTypeRepositoryInterface) private movementTypeRepository!: MovementTypeRepositoryInterface
   @lazyInject(TYPES.MovementRepositoryInterface) private movementRepository!: MovementRepositoryInterface
+  @lazyInject(TYPES.InstitutionRepositoryInterface) private institutionRepository!: InstitutionRepositoryInterface
+  @lazyInject(TYPES.MovementTypeRepositoryInterface) private movementTypeRepository!: MovementTypeRepositoryInterface
+  @lazyInject(TYPES.ReadXlsxFileRespositoryInterface) private readXlsxFileRespository!: ReadXlsxFileRespositoryInterface
 
   async execute(filePath: string): Promise<void> {
     const fileStream = fs.createReadStream(filePath)
