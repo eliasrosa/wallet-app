@@ -1,17 +1,19 @@
+import { ReadXlsxFileRespositoryInterface } from '@/interfaces/repositories/file/ReadXlsxFileRespositoryInterface'
 import { ImportDividendsService } from '@/services/ImportDividendsService'
-import { ReadXlsxFileRespository } from '@/repositories/file/ReadXlsxFileRespository'
 import { ImportMovementsService } from '@/services/ImportMovementsService'
+import { container } from '@/app'
+import { TYPES } from '@/types'
 
-async function importDividends(): Promise<void> {
-  const dividendFilesPath = await (new ReadXlsxFileRespository).listFiles('data/b3/dividends')
+async function importDividends(readXlsxFileRespository: ReadXlsxFileRespositoryInterface): Promise<void> {
+  const dividendFilesPath = await readXlsxFileRespository.listFiles('data/b3/dividends')
 
   for await (const filePath of dividendFilesPath) {
     await (new ImportDividendsService()).execute(filePath)
   }
 }
 
-async function importMovements(): Promise<void> {
-  const movementFilesPath = await (new ReadXlsxFileRespository).listFiles('data/b3/movements')
+async function importMovements(readXlsxFileRespository: ReadXlsxFileRespositoryInterface): Promise<void> {
+  const movementFilesPath = await readXlsxFileRespository.listFiles('data/b3/movements')
 
   for await (const filePath of movementFilesPath) {
     await (new ImportMovementsService()).execute(filePath)
@@ -19,8 +21,10 @@ async function importMovements(): Promise<void> {
 }
 
 async function main(): Promise<void> {
-  await importDividends()
-  await importMovements()
+  const readXlsxFileRespository = container.get<ReadXlsxFileRespositoryInterface>(TYPES.ReadXlsxFileRespositoryInterface)
+
+  await importDividends(readXlsxFileRespository)
+  await importMovements(readXlsxFileRespository)
 }
 
 main()

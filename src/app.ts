@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { TYPES } from "./types";
 import { Container, injectable } from "inversify";
 import getDecorators from "inversify-inject-decorators";
@@ -18,18 +19,18 @@ import { MovementTypeRepositoryInterface } from "./interfaces/repositories/datab
 import { ReadXlsxFileRespository } from "@/repositories/file/ReadXlsxFileRespository";
 import { ReadXlsxFileRespositoryInterface } from "@/interfaces/repositories/file/ReadXlsxFileRespositoryInterface";
 
-const app = new Container()
+const container = new Container()
+const { lazyInject } = getDecorators(container)
 
 // database repositories
-app.bind<TickerRepositoryInterface>(TYPES.TickerRepositoryInterface).to(TickerRepository)
-app.bind<InstitutionRepositoryInterface>(TYPES.InstitutionRepositoryInterface).to(InstitutionRepository)
-app.bind<DividendTypeRepositoryInterface>(TYPES.DividendTypeRepositoryInterface).to(DividendTypeRepository)
-app.bind<DividendRepositoryInterface>(TYPES.DividendRepositoryInterface).to(DividendRepository)
-app.bind<MovementRepositoryInterface>(TYPES.MovementRepositoryInterface).to(MovementRepository)
-app.bind<MovementTypeRepositoryInterface>(TYPES.MovementTypeRepositoryInterface).to(MovementTypeRepository)
+container.bind<TickerRepositoryInterface>(TYPES.TickerRepositoryInterface).to(TickerRepository)
+container.bind<InstitutionRepositoryInterface>(TYPES.InstitutionRepositoryInterface).to(InstitutionRepository)
+container.bind<DividendTypeRepositoryInterface>(TYPES.DividendTypeRepositoryInterface).to(DividendTypeRepository)
+container.bind<DividendRepositoryInterface>(TYPES.DividendRepositoryInterface).to(DividendRepository)
+container.bind<MovementRepositoryInterface>(TYPES.MovementRepositoryInterface).to(MovementRepository)
+container.bind<MovementTypeRepositoryInterface>(TYPES.MovementTypeRepositoryInterface).to(MovementTypeRepository)
 
 // file repositories
-app.bind<ReadXlsxFileRespositoryInterface>(TYPES.ReadXlsxFileRespositoryInterface).to(ReadXlsxFileRespository)
+container.bind<ReadXlsxFileRespositoryInterface>(TYPES.ReadXlsxFileRespositoryInterface).to(ReadXlsxFileRespository)
 
-const { lazyInject } = getDecorators(app)
-export { app, lazyInject, injectable }
+export { container , lazyInject, injectable }
