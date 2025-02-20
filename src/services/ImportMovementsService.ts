@@ -1,23 +1,32 @@
 import fs from 'fs'
 import objectHash from 'object-hash'
-import { TickerRepository } from '@/repositories/database/TickerRepository'
-import { MovementRepository } from '@/repositories/database/MovementRepository'
-import { InstitutionRepository } from '@/repositories/database/InstitutionRepository'
-import { ReadXlsxFileRespository } from '@/repositories/file/ReadXlsxFileRespository'
-import { MovementTypeRepository } from '@/repositories/database/MovementTypeRepository'
 
+import { TYPES } from '@/types';
+import { injectable, lazyInject } from '@/app';
+import type{ TickerRepositoryInterface } from '@/interfaces/repositories/database/TickerRepositoryInterface'
+import type { InstitutionRepositoryInterface } from '@/interfaces/repositories/database/InstitutionRepositoryInterface'
+import type { ReadXlsxFileRespositoryInterface } from "@/interfaces/repositories/file/ReadXlsxFileRespositoryInterface";
+import type { MovementTypeRepositoryInterface } from '@/interfaces/repositories/database/MovementTypeRepositoryInterface';
+import type { MovementRepositoryInterface } from '@/interfaces/repositories/database/MovementRepositoryInterface';
+
+@injectable()
 export class ImportMovementsService {
-  async execute(filePath: string): Promise<void> {
+  @lazyInject(TYPES.ReadXlsxFileRespositoryInterface) private readXlsxFileRespository!: ReadXlsxFileRespositoryInterface
+  @lazyInject(TYPES.InstitutionRepositoryInterface) private institutionRepository!: InstitutionRepositoryInterface
+  @lazyInject(TYPES.TickerRepositoryInterface) private tickerRepository!: TickerRepositoryInterface
+  @lazyInject(TYPES.MovementTypeRepositoryInterface) private movementTypeRepository!: MovementTypeRepositoryInterface
+  @lazyInject(TYPES.MovementRepositoryInterface) private movementRepository!: MovementRepositoryInterface
 
+  async execute(filePath: string): Promise<void> {
     const fileStream = fs.createReadStream(filePath)
-    const rows = await (new ReadXlsxFileRespository()).readMovementFile(fileStream)
+    const rows = await this.readXlsxFileRespository.readMovementFile(fileStream)
 
     for await (const row of rows) {
-      const ticker = await (new TickerRepository()).findOrCreate(row.tickerId, row.tickerName)
-      const institution = await (new InstitutionRepository()).findOrCreate(row.institutionName)
-      const movementType = await (new MovementTypeRepository()).findOrCreate(row.movementTypeName)
+      const ticker = await this.tickerRepository.findOrCreate(row.tickerId, row.tickerName)
+      const institution = await this.institutionRepository.findOrCreate(row.institutionName)
+      const movementType = await this.movementTypeRepository.findOrCreate(row.movementTypeName)
 
-      await (new MovementRepository()).create({
+      await this.movementRepository.create({
         tickerId: ticker.id,
         quantity: row.quantity,
         price: row.price,
