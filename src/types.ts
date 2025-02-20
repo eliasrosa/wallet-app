@@ -1,10 +1,10 @@
 const TYPES = {
   // database repositories
   TickerRepositoryInterface: Symbol.for("TickerRepositoryInterface"),
-  InstitutionRepositoryInterface: Symbol.for("InstitutionRepositoryInterface"),
-  DividendRepositoryInterface: Symbol.for("DividendRepositoryInterface"),
-  DividendTypeRepositoryInterface: Symbol.for("DividendTypeRepositoryInterface"),
   MovementRepositoryInterface: Symbol.for("MovementRepositoryInterface"),
+  DividendRepositoryInterface: Symbol.for("DividendRepositoryInterface"),
+  InstitutionRepositoryInterface: Symbol.for("InstitutionRepositoryInterface"),
+  DividendTypeRepositoryInterface: Symbol.for("DividendTypeRepositoryInterface"),
   MovementTypeRepositoryInterface: Symbol.for("MovementTypeRepositoryInterface"),
 
   // file repositories
