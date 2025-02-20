@@ -66,7 +66,7 @@ export function Component1() {
       <CardContent >
         <ChartContainer
           config={chartConfig}
-          className="mx-auto aspect-square max-h-[300px]"
+          className="mx-auto aspect-square max-h-[250px]"
         >
           <PieChart>
             <ChartTooltip
@@ -85,6 +85,7 @@ export function Component1() {
               data={goalData}
               dataKey="goal"
               outerRadius={65}
+              cornerRadius={3}
             >
               <LabelList
                 dataKey="type"
@@ -100,10 +101,9 @@ export function Component1() {
               data={walletData}
               dataKey="wallet"
               outerRadius={95}
-              innerRadius={85}
+              innerRadius={82}
+              cornerRadius={5}
             >
-
-
             </Pie>
           </PieChart>
         </ChartContainer>

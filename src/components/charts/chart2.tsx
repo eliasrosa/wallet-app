@@ -12,6 +12,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
@@ -34,13 +35,13 @@ export function Component2() {
   return (
     <Card className="flex flex-col">
       <CardHeader className="items-center">
-        <CardTitle>Equibrio da Carteira</CardTitle>
+        <CardTitle>Equilíbrio da Carteira</CardTitle>
         <CardDescription>Exibe o quanto saúdavel está sua carteira</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer
           config={chartConfig}
-          className="mx-auto aspect-square"
+          className="mx-auto aspect-square max-h-[250px]"
         >
           <RadialBarChart
             data={chartData}
@@ -93,6 +94,9 @@ export function Component2() {
           </RadialBarChart>
         </ChartContainer>
       </CardContent>
+      <CardFooter>
+        
+      </CardFooter>
     </Card>
   )
 }
