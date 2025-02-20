@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { TYPES } from "./types";
 import { Container, injectable } from "inversify";
 import getDecorators from "inversify-inject-decorators";
