@@ -1,7 +1,7 @@
-import { InstitutionRepositoryInterface } from "@/repositories/database/interfaces/InstitutionRepositoryInterface";
-import { Institution, PrismaClient } from "@prisma/client";
+import { InstitutionRepositoryInterface } from '@/repositories/database/interfaces/InstitutionRepositoryInterface';
+import { Institution, PrismaClient } from '@prisma/client';
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 export class InstitutionRepository implements InstitutionRepositoryInterface {
   async findOrCreate(name: string): Promise<Institution> {
@@ -10,6 +10,6 @@ export class InstitutionRepository implements InstitutionRepositoryInterface {
       where: { name },
       create: { name },
       update: {},
-    })
+    });
   }
 }

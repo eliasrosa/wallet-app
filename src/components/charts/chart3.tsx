@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 import {
   Label,
@@ -6,7 +6,7 @@ import {
   PolarRadiusAxis,
   RadialBar,
   RadialBarChart,
-} from "recharts"
+} from 'recharts';
 
 import {
   Card,
@@ -15,28 +15,30 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { ChartConfig, ChartContainer } from "@/components/ui/chart"
+} from '@/components/ui/card';
+import { ChartConfig, ChartContainer } from '@/components/ui/chart';
 const chartData = [
-  { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
-]
+  { browser: 'safari', visitors: 200, fill: 'var(--color-safari)' },
+];
 
 const chartConfig = {
   visitors: {
-    label: "sasaas",
+    label: 'sasaas',
   },
   safari: {
-    label: "Safari",
-    color: "hsl(var(--chart-2))",
+    label: 'Safari',
+    color: 'hsl(var(--chart-2))',
   },
-} satisfies ChartConfig
+} satisfies ChartConfig;
 
 export function Component3() {
   return (
     <Card className="flex flex-col">
       <CardHeader className="items-center">
         <CardTitle>Equilíbrio da Carteira</CardTitle>
-        <CardDescription>Exibe o quanto saúdavel está sua carteira</CardDescription>
+        <CardDescription>
+          Exibe o quanto saúdavel está sua carteira
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer
@@ -61,7 +63,7 @@ export function Component3() {
             <PolarRadiusAxis tick={false} tickLine={false} axisLine={false}>
               <Label
                 content={({ viewBox }) => {
-                  if (viewBox && "cx" in viewBox && "cy" in viewBox) {
+                  if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
                     return (
                       <text
                         x={viewBox.cx}
@@ -86,7 +88,7 @@ export function Component3() {
                           Médio/Bom
                         </tspan>
                       </text>
-                    )
+                    );
                   }
                 }}
               />
@@ -94,9 +96,7 @@ export function Component3() {
           </RadialBarChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter>
-        
-      </CardFooter>
+      <CardFooter></CardFooter>
     </Card>
-  )
+  );
 }

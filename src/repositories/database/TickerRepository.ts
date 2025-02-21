@@ -1,25 +1,24 @@
-import { TickerRepositoryInterface } from "@/repositories/database/interfaces/TickerRepositoryInterface";
-import { Ticker, PrismaClient } from "@prisma/client";
+import { TickerRepositoryInterface } from '@/repositories/database/interfaces/TickerRepositoryInterface';
+import { Ticker, PrismaClient } from '@prisma/client';
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 export class TickerRepository implements TickerRepositoryInterface {
-
   async getAll(): Promise<Ticker[]> {
     console.log('TickerRepository.getAll');
     return await prisma.ticker.findMany({
       where: { id: { not: { endsWith: '12' } } },
-    })
+    });
   }
 
   async findOrFail(id: string): Promise<Ticker> {
     console.log('TickerRepository.findOrFail', { id });
-    const ticker = await prisma.ticker.findUnique({ where: { id } })
+    const ticker = await prisma.ticker.findUnique({ where: { id } });
     if (!ticker) {
-      throw new Error('Ticker not found')
+      throw new Error('Ticker not found');
     }
 
-    return ticker
+    return ticker;
   }
 
   async findOrCreate(symbol: string, name: string): Promise<Ticker> {
@@ -31,7 +30,7 @@ export class TickerRepository implements TickerRepositoryInterface {
       create: {
         id: symbol,
         name,
-      }
-    })
+      },
+    });
   }
 }

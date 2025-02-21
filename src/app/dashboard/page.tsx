@@ -1,13 +1,13 @@
-import { AppSidebar } from "@/components/app-sidebar"
-import { Component1 } from "@/components/charts/chart1"
-import { Component2 } from "@/components/charts/chart2"
-import { Component3 } from "@/components/charts/chart3"
-import { ModeToggle } from "@/components/mode-toogle"
+import { AppSidebar } from '@/components/app-sidebar';
+import { Component1 } from '@/components/charts/chart1';
+import { Component2 } from '@/components/charts/chart2';
+import { Component3 } from '@/components/charts/chart3';
+import { ModeToggle } from '@/components/mode-toogle';
 import {
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
-} from "@/components/ui/sidebar"
+} from '@/components/ui/sidebar';
 
 export default function Page() {
   return (
@@ -37,5 +37,5 @@ export default function Page() {
         </div>
       </SidebarInset>
     </SidebarProvider>
-  )
+  );
 }

@@ -1,4 +1,4 @@
-import { Movement } from "@prisma/client";
+import { Movement } from '@prisma/client';
 
 export interface CreateData {
   hash: string;
@@ -16,4 +16,3 @@ export interface MovementRepositoryInterface {
   create(data: CreateData): Promise<Movement>;
   clearAll(): Promise<void>;
 }
-

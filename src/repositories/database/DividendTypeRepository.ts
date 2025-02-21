@@ -1,7 +1,7 @@
-import { DividendTypeRepositoryInterface } from "@/repositories/database/interfaces/DividendTypeRepositoryInterface";
-import { DividendType, PrismaClient } from "@prisma/client";
+import { DividendTypeRepositoryInterface } from '@/repositories/database/interfaces/DividendTypeRepositoryInterface';
+import { DividendType, PrismaClient } from '@prisma/client';
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 export class DividendTypeRepository implements DividendTypeRepositoryInterface {
   async findOrCreate(name: string): Promise<DividendType> {
@@ -10,6 +10,6 @@ export class DividendTypeRepository implements DividendTypeRepositoryInterface {
       where: { name },
       create: { name },
       update: {},
-    })
+    });
   }
 }

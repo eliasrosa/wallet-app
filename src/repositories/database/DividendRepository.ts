@@ -1,7 +1,10 @@
-import { CreateData, DividendRepositoryInterface } from "@/repositories/database/interfaces/DividendRepositoryInterface";
-import { Dividend, PrismaClient } from "@prisma/client";
+import {
+  CreateData,
+  DividendRepositoryInterface,
+} from '@/repositories/database/interfaces/DividendRepositoryInterface';
+import { Dividend, PrismaClient } from '@prisma/client';
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 export class DividendRepository implements DividendRepositoryInterface {
   async create(data: CreateData): Promise<Dividend> {
@@ -17,13 +20,13 @@ export class DividendRepository implements DividendRepositoryInterface {
         hash: data.hash,
         ticker: { connect: { id: data.tickerId } },
         institution: { connect: { id: data.institutionId } },
-        dividendType: { connect: { id: data.dividendTypeId } }
-      }
-    })
+        dividendType: { connect: { id: data.dividendTypeId } },
+      },
+    });
   }
 
   async clearAll(): Promise<void> {
     console.log('DividendTypeRepository.clearAll');
-    await prisma.dividend.deleteMany()
+    await prisma.dividend.deleteMany();
   }
 }

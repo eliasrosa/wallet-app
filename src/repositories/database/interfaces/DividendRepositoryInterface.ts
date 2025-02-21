@@ -1,4 +1,4 @@
-import { Dividend } from "@prisma/client";
+import { Dividend } from '@prisma/client';
 
 export interface CreateData {
   hash: string;
@@ -15,4 +15,3 @@ export interface DividendRepositoryInterface {
   create(data: CreateData): Promise<Dividend>;
   clearAll(): Promise<void>;
 }
-

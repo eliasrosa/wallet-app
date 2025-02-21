@@ -1,7 +1,7 @@
-import { MovementTypeRepositoryInterface } from "@/repositories/database/interfaces/MovementTypeRepositoryInterface";
-import { Institution, PrismaClient } from "@prisma/client";
+import { MovementTypeRepositoryInterface } from '@/repositories/database/interfaces/MovementTypeRepositoryInterface';
+import { Institution, PrismaClient } from '@prisma/client';
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 export class MovementTypeRepository implements MovementTypeRepositoryInterface {
   async findOrCreate(name: string): Promise<Institution> {
@@ -10,6 +10,6 @@ export class MovementTypeRepository implements MovementTypeRepositoryInterface {
       where: { name },
       create: { name },
       update: {},
-    })
+    });
   }
 }

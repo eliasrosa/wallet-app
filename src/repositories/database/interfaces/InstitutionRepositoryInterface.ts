@@ -1,6 +1,5 @@
-import { DividendType } from "@prisma/client";
+import { DividendType } from '@prisma/client';
 
 export interface InstitutionRepositoryInterface {
   findOrCreate(name: string): Promise<DividendType>;
 }
-
