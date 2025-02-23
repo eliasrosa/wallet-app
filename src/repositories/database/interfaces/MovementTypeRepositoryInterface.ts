@@ -1,5 +1,5 @@
-import { MovementType } from '@prisma/client';
+import type { MovementType } from '@prisma/client'
 
 export interface MovementTypeRepositoryInterface {
-  findOrCreate(name: string): Promise<MovementType>;
+	findOrCreate(name: string): Promise<MovementType>
 }

@@ -1,17 +1,17 @@
-import { Dividend } from '@prisma/client';
+import type { Dividend } from '@prisma/client'
 
 export interface CreateData {
-  hash: string;
-  paymentAt: Date;
-  quantity?: number | null;
-  price?: number | null;
-  total: number;
-  tickerId: string;
-  institutionId: string;
-  dividendTypeId: string;
+	hash: string
+	paymentAt: Date
+	quantity?: number | null
+	price?: number | null
+	total: number
+	tickerId: string
+	institutionId: string
+	dividendTypeId: string
 }
 
 export interface DividendRepositoryInterface {
-  create(data: CreateData): Promise<Dividend>;
-  clearAll(): Promise<void>;
+	create(data: CreateData): Promise<Dividend>
+	clearAll(): Promise<void>
 }
