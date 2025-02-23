@@ -1,6 +1,6 @@
-import fs from 'fs'
-import path from 'path'
-import type { Stream } from 'stream'
+import fs from 'node:fs'
+import path from 'node:path'
+import type { Stream } from 'node:stream'
 import type {
 	ReadXlsxFileRespositoryInterface,
 	RowDividendFileData,
@@ -81,7 +81,7 @@ export class ReadXlsxFileRespository implements ReadXlsxFileRespositoryInterface
 		})
 
 		if (errors.length > 0) {
-			throw new Error('ReadXlsxFileRespository.readDividendFile: ' + JSON.stringify(errors))
+			throw new Error(`ReadXlsxFileRespository.readDividendFile: ${JSON.stringify(errors)}`)
 		}
 
 		return rows
@@ -112,7 +112,7 @@ export class ReadXlsxFileRespository implements ReadXlsxFileRespositoryInterface
 		})
 
 		if (errors.length > 0) {
-			throw new Error('ReadXlsxFileRespository.readMovementFile: ' + JSON.stringify(errors))
+			throw new Error(`ReadXlsxFileRespository.readMovementFile: ${JSON.stringify(errors)}`)
 		}
 
 		return rows

@@ -1,4 +1,4 @@
-import type { Stream } from 'stream'
+import type { Stream } from 'node:stream'
 
 export interface RowDividendFileData {
 	tickerId: string

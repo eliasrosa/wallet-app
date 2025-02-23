@@ -57,7 +57,7 @@ export function Component3() {
 					</RadialBarChart>
 				</ChartContainer>
 			</CardContent>
-			<CardFooter></CardFooter>
+			{/* <CardFooter></CardFooter> */}
 		</Card>
 	)
 }

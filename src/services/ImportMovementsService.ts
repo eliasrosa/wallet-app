@@ -1,4 +1,4 @@
-import fs from 'fs'
+import fs from 'node:fs'
 import objectHash from 'object-hash'
 
 import { injectable, lazyInject } from '@/app'

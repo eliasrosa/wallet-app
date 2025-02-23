@@ -74,7 +74,7 @@ export function Component1() {
 								formatter={(value: keyof typeof chartConfig) => chartConfig[value]?.label}
 							/>
 						</Pie>
-						<Pie data={walletData} dataKey="wallet" outerRadius={95} innerRadius={82} cornerRadius={5}></Pie>
+						<Pie data={walletData} dataKey="wallet" outerRadius={95} innerRadius={82} cornerRadius={5} />
 					</PieChart>
 				</ChartContainer>
 			</CardContent>
