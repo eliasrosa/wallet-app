@@ -8,12 +8,15 @@
 		"start": "next start",
 		"lint": "npx @biomejs/biome lint",
 		"lint:fix": "npx @biomejs/biome check --write",
-		"db:seed": "npx tsx ./prisma/seed.ts",
 		"db:migrate": "npx prisma migrate dev",
 		"db:reset": "npx prisma migrate reset --force && npm run db:migrate && npm run db:seed",
 		"db:reset2": "rm -rf prisma/migrations && npx prisma migrate reset --force && npm run db:migrate -- --name init && npm run db:seed",
+		"b3:import-dividends": "npx tsx ./src/commands/b3/ImportDividendsCommand.ts",
+		"b3:import-movements": "npx tsx ./src/commands/b3/ImportMovementsCommand.ts",
+
+		"db:seed": "npx tsx ./src/commands/SeedCommand.ts",
+
 		"import:ticker": "npx tsx ./src/commands/ImportTickerDataCommand.ts",
-		"import:b3": "npx tsx ./src/commands/ImportB3FilesCommand.ts",
 		"wallet:create": "npx tsx ./src/commands/WalletCreateCommand.ts"
 	},
 	"dependencies": {

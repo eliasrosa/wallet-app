@@ -1,8 +1,8 @@
 services:
-  app:
+  node:
     build:
       context: .
-      dockerfile: app.Dockerfile
+      dockerfile: node.Dockerfile
     command: npm run dev
     restart: unless-stopped
     env_file:

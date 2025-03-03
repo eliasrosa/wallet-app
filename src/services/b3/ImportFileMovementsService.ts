@@ -1,7 +1,7 @@
 import fs from 'node:fs'
 import objectHash from 'object-hash'
 
-import { injectable, lazyInject } from '@/app'
+import { inject, injectable } from '@/app'
 import type { InstitutionRepositoryInterface } from '@/repositories/database/interfaces/InstitutionRepositoryInterface'
 import type { MovementRepositoryInterface } from '@/repositories/database/interfaces/MovementRepositoryInterface'
 import type { MovementTypeRepositoryInterface } from '@/repositories/database/interfaces/MovementTypeRepositoryInterface'
@@ -10,16 +10,16 @@ import type { ReadXlsxFileRespositoryInterface } from '@/repositories/file-b3/in
 import { TYPES } from '@/types'
 
 @injectable()
-export class ImportMovementsService {
-	@lazyInject(TYPES.TickerRepositoryInterface)
+export class ImportFileMovementsService {
+	@inject(TYPES.TickerRepositoryInterface)
 	private tickerRepository!: TickerRepositoryInterface
-	@lazyInject(TYPES.MovementRepositoryInterface)
+	@inject(TYPES.MovementRepositoryInterface)
 	private movementRepository!: MovementRepositoryInterface
-	@lazyInject(TYPES.InstitutionRepositoryInterface)
+	@inject(TYPES.InstitutionRepositoryInterface)
 	private institutionRepository!: InstitutionRepositoryInterface
-	@lazyInject(TYPES.MovementTypeRepositoryInterface)
+	@inject(TYPES.MovementTypeRepositoryInterface)
 	private movementTypeRepository!: MovementTypeRepositoryInterface
-	@lazyInject(TYPES.ReadXlsxFileRespositoryInterface)
+	@inject(TYPES.ReadXlsxFileRespositoryInterface)
 	private readXlsxFileRespository!: ReadXlsxFileRespositoryInterface
 
 	async execute(filePath: string): Promise<void> {

@@ -1,7 +1,7 @@
 import fs from 'node:fs'
 import objectHash from 'object-hash'
 
-import { injectable, lazyInject } from '@/app'
+import { inject, injectable } from '@/app'
 import type { DividendRepositoryInterface } from '@/repositories/database/interfaces/DividendRepositoryInterface'
 import type { DividendTypeRepositoryInterface } from '@/repositories/database/interfaces/DividendTypeRepositoryInterface'
 import type { InstitutionRepositoryInterface } from '@/repositories/database/interfaces/InstitutionRepositoryInterface'
@@ -10,16 +10,16 @@ import type { ReadXlsxFileRespositoryInterface } from '@/repositories/file-b3/in
 import { TYPES } from '@/types'
 
 @injectable()
-export class ImportDividendsService {
-	@lazyInject(TYPES.ReadXlsxFileRespositoryInterface)
+export class ImportFileDividendsService {
+	@inject(TYPES.ReadXlsxFileRespositoryInterface)
 	private readXlsxFileRespository!: ReadXlsxFileRespositoryInterface
-	@lazyInject(TYPES.DividendTypeRepositoryInterface)
+	@inject(TYPES.DividendTypeRepositoryInterface)
 	private dividendTypeRepository!: DividendTypeRepositoryInterface
-	@lazyInject(TYPES.InstitutionRepositoryInterface)
+	@inject(TYPES.InstitutionRepositoryInterface)
 	private institutionRepository!: InstitutionRepositoryInterface
-	@lazyInject(TYPES.DividendRepositoryInterface)
+	@inject(TYPES.DividendRepositoryInterface)
 	private dividendRepository!: DividendRepositoryInterface
-	@lazyInject(TYPES.TickerRepositoryInterface)
+	@inject(TYPES.TickerRepositoryInterface)
 	private tickerRepository!: TickerRepositoryInterface
 
 	async execute(filePath: string): Promise<void> {
