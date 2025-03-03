@@ -6,6 +6,8 @@ import { TYPES } from './types'
 
 import { ReadXlsxFileRespository } from '@/repositories/file-b3/ReadXlsxFileRespository'
 import type { ReadXlsxFileRespositoryInterface } from '@/repositories/file-b3/interfaces/ReadXlsxFileRespositoryInterface'
+import { ImportTickerDataCommand } from './commands/ticker/ImportTickerDataCommand'
+import { tickers } from './config/tickers'
 import { DividendRepository } from './repositories/database/DividendRepository'
 import { DividendTypeRepository } from './repositories/database/DividendTypeRepository'
 import { InstitutionRepository } from './repositories/database/InstitutionRepository'
@@ -20,6 +22,8 @@ import type { MovementRepositoryInterface } from './repositories/database/interf
 import type { MovementTypeRepositoryInterface } from './repositories/database/interfaces/MovementTypeRepositoryInterface'
 import type { TickerDataRepositoryInterface } from './repositories/database/interfaces/TickerDataRepositoryInterface'
 import type { TickerRepositoryInterface } from './repositories/database/interfaces/TickerRepositoryInterface'
+import type { DataFiiRepositoryInterface } from './repositories/ticker/interfaces/DataFiiRepositoryInterface'
+import { DataFiiRepository } from './repositories/ticker/invest10/DataFiiRepository'
 import { ImportFileDividendsService } from './services/b3/ImportFileDividendsService'
 import { ImportFileMovementsService } from './services/b3/ImportFileMovementsService'
 import { ImportFiiService } from './services/ticker/ImportFiiService'
@@ -38,12 +42,15 @@ container.bind<TickerDataRepositoryInterface>(TYPES.TickerDataRepositoryInterfac
 // file repositories
 container.bind<ReadXlsxFileRespositoryInterface>(TYPES.ReadXlsxFileRespositoryInterface).to(ReadXlsxFileRespository)
 
+// tickers
+container.bind<DataFiiRepositoryInterface>(TYPES.DataFiiRepositoryInterface).to(DataFiiRepository)
+
 // services
 container.bind<ImportFileMovementsService>(TYPES.ImportFileMovementsService).to(ImportFileMovementsService)
 container.bind<ImportFileDividendsService>(TYPES.ImportFileDividendsService).to(ImportFileDividendsService)
 container.bind<ImportFiiService>(TYPES.ImportFiiService).to(ImportFiiService)
 
 // commands
-// container.bind<ImportDividendsCommand>(TYPES.ImportDividendsCommand).to(ImportDividendsCommand)
+container.bind<ImportTickerDataCommand>(TYPES.ImportTickerDataCommand).to(ImportTickerDataCommand)
 
 export { container, inject, injectable, config }

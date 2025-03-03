@@ -1,8 +1,11 @@
+import { container } from '@/app'
 import { TickerRepository } from '@/repositories/database/TickerRepository'
 import { RecalculeGoalsService } from '@/services/wallet/RecalculeGoalsService'
+import { TYPES } from '@/types'
 import { PrismaClient, TickerType } from '@prisma/client'
 import { ImportDividendsCommand } from './b3/ImportDividendsCommand'
 import { ImportMovementsCommand } from './b3/ImportMovementsCommand'
+import type { ImportTickerDataCommand } from './ticker/ImportTickerDataCommand'
 
 const prisma = new PrismaClient()
 
@@ -54,6 +57,12 @@ class DemoCommand {
 		await new RecalculeGoalsService().execute(wallet, TickerType.FII)
 		await new RecalculeGoalsService().execute(wallet, TickerType.ETF)
 		await new RecalculeGoalsService().execute(wallet, TickerType.STOCK)
+
+		const importTickerDataCommand = await container
+			.get<ImportTickerDataCommand>(TYPES.ImportTickerDataCommand)
+			.execute()
+
+		console.log('Demo executed successfully')
 	}
 }
 

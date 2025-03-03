@@ -18,6 +18,9 @@ const TYPES = {
 	ImportFileMovementsService: Symbol.for('ImportFileMovementsService'),
 	ImportFileDividendsService: Symbol.for('ImportFileDividendsService'),
 	ImportFiiService: Symbol.for('ImportFiiService'),
+
+	// commands
+	ImportTickerDataCommand: Symbol.for('ImportTickerDataCommand'),
 }
 
 export { TYPES }
