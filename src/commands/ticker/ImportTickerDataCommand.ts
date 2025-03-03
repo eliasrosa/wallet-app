@@ -27,11 +27,23 @@ export class ImportTickerDataCommand {
 	}
 
 	private async getTickersByWallet(walletId: string) {
+		const oneHourAgo = new Date()
+		oneHourAgo.setHours(oneHourAgo.getHours() - 1)
+
 		return prisma.ticker.findMany({
 			where: {
 				walletTicker: {
 					some: {
 						walletId: walletId,
+					},
+				},
+				NOT: {
+					datas: {
+						some: {
+							createdAt: {
+								gte: oneHourAgo,
+							},
+						},
 					},
 				},
 			},
