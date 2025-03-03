@@ -9,7 +9,7 @@ const prisma = new PrismaClient()
 export class DividendRepository implements DividendRepositoryInterface {
 	async create(data: CreateData): Promise<Dividend> {
 		console.log('DividendRepository.create', data)
-		return await prisma.dividend.upsert({
+		return prisma.dividend.upsert({
 			where: { hash: data.hash },
 			update: {},
 			create: {

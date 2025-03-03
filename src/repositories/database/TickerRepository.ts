@@ -6,7 +6,7 @@ const prisma = new PrismaClient()
 export class TickerRepository implements TickerRepositoryInterface {
 	async getAll(): Promise<Ticker[]> {
 		console.log('TickerRepository.getAll')
-		return await prisma.ticker.findMany({
+		return prisma.ticker.findMany({
 			where: { id: { not: { endsWith: '12' } } },
 		})
 	}
@@ -24,7 +24,7 @@ export class TickerRepository implements TickerRepositoryInterface {
 	async findOrCreate(symbol: string, name: string): Promise<Ticker> {
 		console.log('TickerRepository.findOrCreate', { symbol, name })
 
-		return await prisma.ticker.upsert({
+		return prisma.ticker.upsert({
 			where: { id: symbol },
 			update: { name },
 			create: {
