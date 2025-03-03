@@ -6,7 +6,10 @@ help: ## Show this help
 start: ## Start the containers
 	docker compose up -d
 
-stop: ## Stop the containers
+up: ## Start the containers
+	docker compose up
+
+down: ## Down the containers
 	docker compose down
 
 npm: ## Run npm install
