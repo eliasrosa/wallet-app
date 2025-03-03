@@ -9,7 +9,6 @@ export class ImportTickerDataCommand {
 
 	async execute(): Promise<void> {
 		await this.importFiiService.execute('VISC11')
-
-		console.log('Ticker data imported successfully')
+		await this.importFiiService.execute('XPLG11')
 	}
 }

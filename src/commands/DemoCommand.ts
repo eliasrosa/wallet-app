@@ -12,6 +12,8 @@ const prisma = new PrismaClient()
 class DemoCommand {
 	async execute(): Promise<void> {
 		// clear database
+		// await prisma.dividend.deleteMany()
+		// await prisma.movement.deleteMany()
 		await prisma.walletTicker.deleteMany()
 		await prisma.wallet.deleteMany()
 
@@ -30,7 +32,7 @@ class DemoCommand {
 			},
 		})
 
-		// TODO: attach tickers to wallet
+		// TODO: attach tickers to wallet (service and repository)
 		const tickers = (await new TickerRepository().getAll()).map((ticker) => {
 			return {
 				goal: 0,
@@ -61,15 +63,15 @@ class DemoCommand {
 		const importTickerDataCommand = await container
 			.get<ImportTickerDataCommand>(TYPES.ImportTickerDataCommand)
 			.execute()
-
-		console.log('Demo executed successfully')
 	}
 }
 
 new DemoCommand()
 	.execute()
 	.then(async () => {
+		console.log('Demo executed successfully')
 		await prisma.$disconnect()
+		process.exit(0)
 	})
 	.catch(async (e) => {
 		console.error(e)

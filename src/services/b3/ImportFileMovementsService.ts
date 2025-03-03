@@ -31,7 +31,7 @@ export class ImportFileMovementsService {
 			const institution = await this.institutionRepository.findOrCreate(row.institutionName)
 			const movementType = await this.movementTypeRepository.findOrCreate(row.movementTypeName)
 
-			await this.movementRepository.create({
+			const data = {
 				tickerId: ticker.id,
 				quantity: row.quantity,
 				price: row.price,
@@ -40,8 +40,10 @@ export class ImportFileMovementsService {
 				movementTypeId: movementType.id,
 				institutionId: institution.id,
 				movementAt: row.movementAt,
-				hash: objectHash(row),
-			})
+			}
+
+			const hash = objectHash(data)
+			await this.movementRepository.create({ ...data, hash })
 		}
 	}
 }

@@ -79,7 +79,7 @@ model Dividend {
   total          Float
   dividendTypeId String
   institutionId  String
-  hash           String   @unique
+  hash           String
   paymentAt      DateTime @db.Date
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt

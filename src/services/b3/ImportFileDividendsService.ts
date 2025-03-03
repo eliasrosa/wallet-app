@@ -32,7 +32,7 @@ export class ImportFileDividendsService {
 			const institution = await this.institutionRepository.findOrCreate(row.institutionName)
 			const dividendType = await this.dividendTypeRepository.findOrCreate(row.typeName)
 
-			await this.dividendRepository.create({
+			const data = {
 				total: row.total,
 				price: row.price,
 				tickerId: ticker.id,
@@ -40,8 +40,10 @@ export class ImportFileDividendsService {
 				paymentAt: row.paymentAt,
 				institutionId: institution.id,
 				dividendTypeId: dividendType.id,
-				hash: objectHash(row),
-			})
+			}
+
+			const hash = objectHash(data)
+			await this.dividendRepository.create({ ...data, hash })
 		}
 	}
 }
