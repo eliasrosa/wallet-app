@@ -1,3 +1,4 @@
+import { fetchCache } from '@/lib/fetch'
 import { type CheerioAPI, load } from 'cheerio'
 import type { DataFiiRepositoryInterface, FiiData } from '../interfaces/DataFiiRepositoryInterface'
 
@@ -8,7 +9,12 @@ export class DataFiiRepository implements DataFiiRepositoryInterface {
 	async getData(ticker: string): Promise<FiiData> {
 		console.log('DataFiiRepository.getData', { ticker })
 
-		const response = await fetch(`${this.#baseUrl}/fiis/${ticker.toLocaleLowerCase()}`)
+		const response = await fetchCache(`${this.#baseUrl}/fiis/${ticker.toLocaleLowerCase()}`)
+
+		if (response.isCacheMiss) {
+			console.log('DataFiiRepository.getData', 'Cache miss')
+		}
+
 		this.#documentSelector = load(await response.text())
 
 		return {
