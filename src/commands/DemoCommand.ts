@@ -14,6 +14,7 @@ class DemoCommand {
 		// clear database
 		// await prisma.dividend.deleteMany()
 		// await prisma.movement.deleteMany()
+
 		await prisma.walletTicker.deleteMany()
 		await prisma.wallet.deleteMany()
 
@@ -60,9 +61,10 @@ class DemoCommand {
 		await new RecalculeGoalsService().execute(wallet, TickerType.ETF)
 		await new RecalculeGoalsService().execute(wallet, TickerType.STOCK)
 
+		// import ticker data by wallet
 		const importTickerDataCommand = await container
 			.get<ImportTickerDataCommand>(TYPES.ImportTickerDataCommand)
-			.execute()
+			.execute(wallet.id)
 	}
 }
 
