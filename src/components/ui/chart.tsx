@@ -4,7 +4,6 @@ import * as React from 'react'
 import * as RechartsPrimitive from 'recharts'
 
 import { cn } from '@/lib/utils'
-import { toPercent } from '../../lib/number'
 
 // Format: { THEME_NAME: CSS_SELECTOR }
 const THEMES = { light: '', dark: '.dark' } as const
@@ -229,78 +228,6 @@ const ChartTooltipContent = React.forwardRef<
 )
 ChartTooltipContent.displayName = 'ChartTooltip'
 
-const WalletBalanceChartTooltipContent = React.forwardRef<
-	HTMLDivElement,
-	React.ComponentProps<typeof RechartsPrimitive.Tooltip> &
-		React.ComponentProps<'div'> & {
-			nameKey?: string
-			labelKey?: string
-		}
->(({ active, payload, className }, ref) => {
-	if (!active || !payload?.length) {
-		return null
-	}
-
-	return (
-		<div
-			ref={ref}
-			className={cn(
-				'grid min-w-[13rem] gap-1.5 rounded-lg border border-border/50 bg-background px-2.5 py-1.5 text-xs shadow-xl',
-				className,
-			)}
-		>
-			<div>
-				{payload.map((item) => {
-					const { label, diff, wallet, goal, fill } = item.payload
-
-					return (
-						<div key={item.dataKey}>
-							<table className="table-auto w-full">
-								<thead>
-									<tr className="border-b border-b-gray-200">
-										<th colSpan={2} className="text-left">
-											<div
-												className="shrink-0 rounded-[2px] border-[--color-border] bg-[--color-bg] inline-block mr-2 h-2.5 w-2.5"
-												style={
-													{
-														'--color-bg': fill,
-														'--color-border': fill,
-													} as React.CSSProperties
-												}
-											/>
-
-											{label}
-										</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td className="text-left">Meta</td>
-										<td className="text-right font-mono font-medium tabular-nums text-foreground">{toPercent(goal)}</td>
-									</tr>
-									<tr>
-										<td className="text-left">Carteira</td>
-										<td className="text-right font-mono font-medium tabular-nums text-foreground">
-											{toPercent(wallet)}
-										</td>
-									</tr>
-								</tbody>
-								<tfoot>
-									<tr className="border-t border-t-gray-200">
-										<th className="text-left">Diferença</th>
-										<th className="text-right font-mono font-bold tabular-nums">{toPercent(diff)}</th>
-									</tr>
-								</tfoot>
-							</table>
-						</div>
-					)
-				})}
-			</div>
-		</div>
-	)
-})
-ChartTooltipContent.displayName = 'WalletBalanceChartTooltipContent'
-
 const ChartLegend = RechartsPrimitive.Legend
 
 const ChartLegendContent = React.forwardRef<
@@ -376,12 +303,4 @@ function getPayloadConfigFromPayload(config: ChartConfig, payload: unknown, key:
 	return configLabelKey in config ? config[configLabelKey] : config[key as keyof typeof config]
 }
 
-export {
-	ChartContainer,
-	ChartTooltip,
-	ChartTooltipContent,
-	WalletBalanceChartTooltipContent,
-	ChartLegend,
-	ChartLegendContent,
-	ChartStyle,
-}
+export { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent, ChartStyle }

@@ -12,29 +12,21 @@ export const WalletBalanceCard = React.forwardRef<HTMLDivElement, React.HTMLAttr
 				name: 'RF',
 				goal: 0.1,
 				total: 9950,
-				label: 'Renda Fixa',
-				fill: 'hsl(var(--chart-3))',
 			},
 			{
 				name: 'FII',
 				goal: 0.5,
 				total: 44843.6,
-				label: 'Fundos Imobiliários',
-				fill: 'hsl(var(--chart-1))',
 			},
 			{
 				name: 'ETF',
 				goal: 0.2,
 				total: 20950.13,
-				label: 'ETF',
-				fill: 'hsl(var(--chart-2))',
 			},
 			{
 				name: 'STOCK',
 				goal: 0.2,
 				total: 15977.56,
-				label: 'Ações',
-				fill: 'hsl(var(--chart-5))',
 			},
 		]
 

@@ -1,11 +1,13 @@
 'use client'
 
-import { ChartContainer, ChartTooltip, WalletBalanceChartTooltipContent } from '@/components/ui/chart'
+import { ChartContainer, ChartTooltip } from '@/components/ui/chart'
 import { toPercent } from '@/lib/number'
+import { TickerTypeColor, TickerTypeLabel } from '@/ticker-enum'
 import { Label, Pie, PieChart } from 'recharts'
+import { WalletBalanceChartTooltipContent } from '../tooltips/contents/wallet-balance-chart-tooltip-content'
 
 const getLabelText = (diffPercent: number) => {
-	if (diffPercent <= 0.05) return 'Exelente'
+	if (diffPercent <= 0.05) return 'Excelente'
 	if (diffPercent <= 0.1) return 'Cuidado'
 	if (diffPercent <= 0.15) return 'Atenção'
 	if (diffPercent <= 0.2) return 'Perigo'
@@ -17,8 +19,6 @@ type Props = {
 		name: string
 		goal: number
 		total: number
-		label: string
-		fill: string
 	}[]
 }
 
@@ -29,12 +29,13 @@ export const calculeWalletBalanceChartData = (data: Props['data']) => {
 		.map((item) => {
 			const wallet = item.total / walletTotal
 			const diff = Math.abs(wallet - item.goal)
-			return { ...item, wallet, diff }
+			const label = TickerTypeLabel[item.name as keyof typeof TickerTypeLabel]
+			const fill = TickerTypeColor[item.name as keyof typeof TickerTypeColor]
+			return { ...item, wallet, diff, label, fill }
 		})
 		.sort((a, b) => a.diff - b.diff)
 
 	const diffPercent = chartData.reduce((acc, { diff }) => acc + diff, 0)
-
 	const diffTotal = walletTotal * diffPercent
 
 	return { chartData, diffTotal, walletTotal, diffPercent }

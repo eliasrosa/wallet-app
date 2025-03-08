@@ -15,7 +15,7 @@ export default function Page() {
 				</header>
 				<div className="grid auto-rows-min grid-cols-1 lg:grid-cols-3 2xl:grid-cols-4 gap-4 p-4">
 					<WalletBalanceCard />
-					<WalletEvolutionCard className="lg:col-span-2 2xl:col-span-3" />
+					<WalletEvolutionCard className="lg:col-span-2" />
 				</div>
 			</SidebarInset>
 		</SidebarProvider>
