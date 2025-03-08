@@ -33,20 +33,22 @@ export function WalletEvolutionChart({ data }: Props) {
 		},
 	}
 
-	// TODO: Implement the following code
-	// const firstRadius = [0, 0, 4, 4]
-	// const lastRadius = [4, 4, 0, 0]
-
 	return (
 		<ChartContainer config={config} className="mx-auto w-full max-h-[250px]">
 			<BarChart accessibilityLayer data={data}>
 				<CartesianGrid vertical={false} />
 				<XAxis dataKey="month" tickMargin={10} tickLine={false} axisLine={false} tickFormatter={(value) => value} />
 				<ChartLegend content={<ChartLegendContent />} />
-				<ChartTooltip content={<WalletEvolutionChartTooltipContent />} />
+				<ChartTooltip cursor={false} content={<WalletEvolutionChartTooltipContent />} />
 				{config &&
-					Object.keys(config).map((key) => (
-						<Bar key={key} dataKey={key} stackId="month" fill={config[key as keyof typeof config].fill} />
+					Object.keys(config).map((key, i) => (
+						<Bar
+							key={key}
+							dataKey={key}
+							stackId="month"
+							fill={config[key as keyof typeof config].fill}
+							radius={Object.keys(config).length - 1 === i ? [3, 3, 0, 0] : [0, 0, 0, 0]}
+						/>
 					))}
 			</BarChart>
 		</ChartContainer>
