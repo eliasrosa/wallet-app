@@ -57,7 +57,8 @@ export function WalletBalanceChart({ data }: Props) {
 											{toPercent(diffPercent, 1)}
 										</tspan>
 										<tspan x={viewBox.cx} y={(viewBox.cy || 0) + 24} className="fill-muted-foreground">
-											{getLabelText(diffPercent)}
+											{/* {getLabelText(diffPercent)} */}
+											{window.innerWidth}
 										</tspan>
 									</text>
 								)

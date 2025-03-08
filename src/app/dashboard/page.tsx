@@ -13,9 +13,11 @@ export default function Page() {
 					<ModeToggle />
 				</header>
 				<div className="flex flex-1 flex-col gap-4 p-4">
-					<div className="grid auto-rows-min gap-4 sm:grid-cols-2 md:grid-cols-4">
+					<div className="grid auto-rows-min grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-4">
 						<WalletBalanceCard />
-						{/* <div className="aspect-video rounded-xl bg-muted/50" /> */}
+						<div className="aspect-video rounded-xl bg-muted/50 col-span-2 " />
+						<div className="aspect-video rounded-xl bg-muted/50" />
+						<div className="aspect-video rounded-xl bg-muted/50" />
 					</div>
 				</div>
 			</SidebarInset>
