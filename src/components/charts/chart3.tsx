@@ -1,22 +1,63 @@
 'use client'
 
-import { Label, PolarGrid, PolarRadiusAxis, RadialBar, RadialBarChart } from 'recharts'
-
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-import { type ChartConfig, ChartContainer } from '@/components/ui/chart'
-const chartData = [{ browser: 'safari', visitors: 200, fill: 'var(--color-safari)' }]
+import { ChartContainer, ChartTooltip, ChartTooltipContent2 } from '@/components/ui/chart'
+import { toCurrency, toPercent } from '@/lib/number'
+import { Label, Pie, PieChart } from 'recharts'
 
-const chartConfig = {
-	visitors: {
-		label: 'sasaas',
-	},
-	safari: {
-		label: 'Safari',
-		color: 'hsl(var(--chart-2))',
-	},
-} satisfies ChartConfig
+const getLabelText = (diffPercent: number) => {
+	if (diffPercent <= 0.05) return 'Exelente'
+	if (diffPercent <= 0.1) return 'Cuidado'
+	if (diffPercent <= 0.15) return 'Atenção'
+	if (diffPercent <= 0.2) return 'Perigo'
+	return 'Crítico'
+}
 
 export function Component3() {
+	const input = [
+		{
+			name: 'RF',
+			goal: 0.1,
+			total: 9950,
+			label: 'Renda Fixa',
+			fill: 'hsl(var(--chart-3))',
+		},
+		{
+			name: 'FII',
+			goal: 0.5,
+			total: 44843.6,
+			label: 'Fundos Imobiliários',
+			fill: 'hsl(var(--chart-1))',
+		},
+		{
+			name: 'ETF',
+			goal: 0.2,
+			total: 20950.13,
+			label: 'ETF',
+			fill: 'hsl(var(--chart-2))',
+		},
+		{
+			name: 'STOCK',
+			goal: 0.2,
+			total: 15977.56,
+			label: 'Ações',
+			fill: 'hsl(var(--chart-5))',
+		},
+	]
+
+	const walletTotal = input.reduce((acc, { total }) => acc + total, 0)
+
+	const chartData = input
+		.map((item) => {
+			const wallet = item.total / walletTotal
+			const diff = Math.abs(wallet - item.goal)
+			return { ...item, wallet, diff }
+		})
+		.sort((a, b) => a.diff - b.diff)
+
+	const diffPercent = chartData.reduce((acc, { diff }) => acc + diff, 0)
+	const diffTotal = walletTotal * diffPercent
+
 	return (
 		<Card className="flex flex-col">
 			<CardHeader className="items-center">
@@ -24,40 +65,41 @@ export function Component3() {
 				<CardDescription>Exibe o quanto saúdavel está sua carteira</CardDescription>
 			</CardHeader>
 			<CardContent>
-				<ChartContainer config={chartConfig} className="mx-auto aspect-square max-h-[250px]">
-					<RadialBarChart data={chartData} startAngle={0} endAngle={280} innerRadius={80} outerRadius={110}>
-						<PolarGrid
-							gridType="circle"
-							radialLines={false}
-							stroke="none"
-							className="first:fill-muted last:fill-background"
-							polarRadius={[86, 74]}
-						/>
-						<RadialBar dataKey="visitors" background cornerRadius={10} />
-						<PolarRadiusAxis tick={false} tickLine={false} axisLine={false}>
+				<ChartContainer config={{}} className="mx-auto aspect-square max-h-[250px]">
+					<PieChart>
+						<ChartTooltip cursor={false} content={<ChartTooltipContent2 />} />
+						<Pie data={chartData} dataKey="diff" nameKey="name" innerRadius={80} strokeWidth={5}>
 							<Label
+								color="var(--chart-1)"
 								content={({ viewBox }) => {
 									if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
 										return (
 											<text x={viewBox.cx} y={viewBox.cy} textAnchor="middle" dominantBaseline="middle">
-												<tspan x={viewBox.cx} y={viewBox.cy} className="fill-foreground text-4xl font-bold">
-													{/* {chartData[0].visitors.toLocaleString()} */}
-													75%
+												<tspan
+													x={viewBox.cx}
+													y={viewBox.cy}
+													className="fill-foreground text-3xl font-bold text-blue-800"
+												>
+													{toPercent(diffPercent, 1)}
 												</tspan>
 												<tspan x={viewBox.cx} y={(viewBox.cy || 0) + 24} className="fill-muted-foreground">
-													{/* {chartConfig.visitors.label} */}
-													Médio/Bom
+													{getLabelText(diffPercent)}
 												</tspan>
 											</text>
 										)
 									}
 								}}
 							/>
-						</PolarRadiusAxis>
-					</RadialBarChart>
+						</Pie>
+					</PieChart>
 				</ChartContainer>
 			</CardContent>
-			{/* <CardFooter></CardFooter> */}
+			<CardFooter className="text-sm">
+				<div className="leading-none text-muted-foreground font-medium text-center">
+					Serão necessários aproximadamente <strong>{toCurrency(diffTotal)}</strong> em novos aportes para o
+					rebalanceamento ideal
+				</div>
+			</CardFooter>
 		</Card>
 	)
 }
