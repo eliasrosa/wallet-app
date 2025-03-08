@@ -1,5 +1,6 @@
 import { AppSidebar } from '@/components/app-sidebar'
-import WalletBalanceCard from '@/components/cards/wallet-balance-card'
+import { WalletBalanceCard } from '@/components/cards/wallet-balance-card'
+import { WalletEvolutionCard } from '@/components/cards/wallet-evolution-card'
 import { ModeToggle } from '@/components/mode-toogle'
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
 
@@ -12,11 +13,9 @@ export default function Page() {
 					<SidebarTrigger />
 					<ModeToggle />
 				</header>
-				<div className="grid auto-rows-min grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-4 p-4">
+				<div className="grid auto-rows-min grid-cols-1 lg:grid-cols-3 2xl:grid-cols-4 gap-4 p-4">
 					<WalletBalanceCard />
-					<div className="aspect-video rounded-xl bg-muted/50 lg:col-span-2 " />
-					<div className="aspect-video rounded-xl bg-muted/50" />
-					<div className="aspect-video rounded-xl bg-muted/50" />
+					<WalletEvolutionCard className="lg:col-span-2 2xl:col-span-3" />
 				</div>
 			</SidebarInset>
 		</SidebarProvider>
