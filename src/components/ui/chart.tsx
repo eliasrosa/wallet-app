@@ -229,7 +229,7 @@ const ChartTooltipContent = React.forwardRef<
 )
 ChartTooltipContent.displayName = 'ChartTooltip'
 
-const ChartTooltipContent2 = React.forwardRef<
+const WalletBalanceChartTooltipContent = React.forwardRef<
 	HTMLDivElement,
 	React.ComponentProps<typeof RechartsPrimitive.Tooltip> &
 		React.ComponentProps<'div'> & {
@@ -299,7 +299,7 @@ const ChartTooltipContent2 = React.forwardRef<
 		</div>
 	)
 })
-ChartTooltipContent.displayName = 'ChartTooltipContent2'
+ChartTooltipContent.displayName = 'WalletBalanceChartTooltipContent'
 
 const ChartLegend = RechartsPrimitive.Legend
 
@@ -380,7 +380,7 @@ export {
 	ChartContainer,
 	ChartTooltip,
 	ChartTooltipContent,
-	ChartTooltipContent2,
+	WalletBalanceChartTooltipContent,
 	ChartLegend,
 	ChartLegendContent,
 	ChartStyle,
