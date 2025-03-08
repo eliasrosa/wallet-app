@@ -3,7 +3,7 @@
 import { ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip } from '@/components/ui/chart'
 import { TickerTypeColor, TickerTypeLabel } from '@/ticker-enum'
 import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts'
-import { WalletEvolutionChartTooltipContent } from '../tooltips/contents/wallet-evolution-chart-tooltip-content'
+import { WalletEvolutionChartTooltipContent } from '../tooltips/contents/wallet-evolution-chart-content'
 
 type Props = {
 	data: {
@@ -41,13 +41,13 @@ export function WalletEvolutionChart({ data }: Props) {
 				<ChartLegend content={<ChartLegendContent />} />
 				<ChartTooltip cursor={false} content={<WalletEvolutionChartTooltipContent />} />
 				{config &&
-					Object.keys(config).map((key, i) => (
+					Object.keys(config).map((key) => (
 						<Bar
 							key={key}
 							dataKey={key}
 							stackId="month"
+							className="rounded-s-none"
 							fill={config[key as keyof typeof config].fill}
-							radius={Object.keys(config).length - 1 === i ? [3, 3, 0, 0] : [0, 0, 0, 0]}
 						/>
 					))}
 			</BarChart>

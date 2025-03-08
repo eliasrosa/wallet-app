@@ -4,7 +4,7 @@ import { ChartContainer, ChartTooltip } from '@/components/ui/chart'
 import { toPercent } from '@/lib/number'
 import { TickerTypeColor, TickerTypeLabel } from '@/ticker-enum'
 import { Label, Pie, PieChart } from 'recharts'
-import { WalletBalanceChartTooltipContent } from '../tooltips/contents/wallet-balance-chart-tooltip-content'
+import { WalletBalanceChartTooltipContent } from '../tooltips/contents/wallet-balance-chart-content'
 
 const getLabelText = (diffPercent: number) => {
 	if (diffPercent <= 0.05) return 'Excelente'

@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils'
 import type { TickerType } from '@prisma/client'
 import * as React from 'react'
 import type * as RechartsPrimitive from 'recharts'
-import { TickerTypeTooltipLabel } from './labels/ticker-type-tooltip-label'
+import { TickerTypeTooltipLabel } from '../labels/ticker-type-label'
 
 const WalletBalanceChartTooltipContent = React.forwardRef<
 	HTMLDivElement,
