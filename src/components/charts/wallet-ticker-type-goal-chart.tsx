@@ -73,8 +73,8 @@ export function WalletTickerTypeGoalChart({ data }: Props) {
 				/>
 
 				<PolarGrid />
-				<Radar dataKey="goal" fill="hsl(var(--chart-goal))" />
-				<Radar dataKey="wallet" fill="hsl(var(--chart-wallet))" fillOpacity={0.6} />
+				<Radar dataKey="goal" fill="hsl(var(--chart-goal))" fillOpacity={0.7} />
+				<Radar dataKey="wallet" fill="hsl(var(--chart-wallet))" fillOpacity={0.7} />
 				<ChartLegend className="mt-5" content={<ChartLegendContent />} />
 			</RadarChart>
 		</ChartContainer>

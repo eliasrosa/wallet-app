@@ -9,23 +9,23 @@ export const WalletTickerTypeGoalCard = React.forwardRef<HTMLDivElement, React.H
 		const data = [
 			{
 				name: 'RF',
-				goal: 0.1,
+				goal: 0.25,
 				total: 9950,
 			},
 			{
 				name: 'ETF',
-				goal: 0.2,
+				goal: 0.25,
 				total: 20950.13,
 			},
 			{
 				name: 'FII',
-				goal: 0.5,
+				goal: 0.25,
 				total: 44843.6,
 			},
 
 			{
 				name: 'STOCK',
-				goal: 0.2,
+				goal: 0.25,
 				total: 15977.56,
 			},
 		]
