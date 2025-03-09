@@ -8,7 +8,7 @@ import {
 	ChartTooltip,
 	ChartTooltipContent,
 } from '@/components/ui/chart'
-import { TickerTypeLabel } from '@/ticker-enum'
+import { TickerTypeLabel } from '@/enums/ticker-enum'
 import { PolarAngleAxis, PolarGrid, Radar, RadarChart } from 'recharts'
 
 type Props = {
