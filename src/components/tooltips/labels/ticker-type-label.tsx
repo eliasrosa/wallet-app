@@ -1,4 +1,4 @@
-import { TickerTypeColor, TickerTypeLabel } from '@/enums/ticker-enum'
+import { TickerTypeColor, TickerTypeLabel } from '@/ticker-enum'
 import type { TickerType } from '@prisma/client'
 import type React from 'react'
 

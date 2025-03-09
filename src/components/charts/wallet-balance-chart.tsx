@@ -1,8 +1,8 @@
 'use client'
 
 import { ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip } from '@/components/ui/chart'
-import { TickerTypeColor, TickerTypeLabel } from '@/enums/ticker-enum'
 import { toPercent } from '@/lib/number'
+import { TickerTypeColor, TickerTypeLabel } from '@/ticker-enum'
 import { Label, Pie, PieChart } from 'recharts'
 import { WalletBalanceChartTooltipContent } from '../tooltips/contents/wallet-balance-chart-content'
 

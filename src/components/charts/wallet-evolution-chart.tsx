@@ -1,7 +1,7 @@
 'use client'
 
 import { ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip } from '@/components/ui/chart'
-import { TickerTypeColor, TickerTypeLabel } from '@/enums/ticker-enum'
+import { TickerTypeColor, TickerTypeLabel } from '@/ticker-enum'
 import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts'
 import { WalletEvolutionChartTooltipContent } from '../tooltips/contents/wallet-evolution-chart-content'
 
