@@ -9,20 +9,28 @@ import {
 	ChartTooltipContent,
 } from '@/components/ui/chart'
 import { TickerTypeLabel } from '@/enums/ticker-enum'
+import { TickerType } from '@prisma/client'
 import { PolarAngleAxis, PolarGrid, Radar, RadarChart } from 'recharts'
 
+type DataInput = {
+	name: TickerType
+	goal: number
+	total: number
+}
+
 type Props = {
-	data: {
-		name: string
-		goal: number
-		total: number
-	}[]
+	data: DataInput[]
+}
+
+type DataChart = DataInput & {
+	wallet: number
+	label: string
 }
 
 export const calculeWalletBalanceChartData = (data: Props['data']) => {
 	const walletTotal = data.reduce((acc, { total }) => acc + total, 0)
 
-	const chartData = data.map((item) => {
+	const chartData: DataChart[] = data.map((item) => {
 		const wallet = item.total / walletTotal
 		const label = TickerTypeLabel[item.name as keyof typeof TickerTypeLabel]
 		return { ...item, wallet, label }
@@ -33,6 +41,9 @@ export const calculeWalletBalanceChartData = (data: Props['data']) => {
 
 export function WalletTickerTypeGoalChart({ data }: Props) {
 	const { chartData } = calculeWalletBalanceChartData(data)
+
+	const types = [TickerType.RF, TickerType.STOCK, TickerType.FII, TickerType.ETF]
+	chartData.sort((a, b) => types.indexOf(a.name) - types.indexOf(b.name))
 
 	const chartConfig = {
 		goal: {
