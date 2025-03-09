@@ -48,7 +48,7 @@ export function WalletBalanceChart({ data }: Props) {
 		<ChartContainer config={{}} className="mx-auto aspect-square max-h-[300px]">
 			<PieChart>
 				<ChartTooltip cursor={false} content={<WalletBalanceChartTooltipContent />} />
-				<Pie data={chartData} dataKey="diff" nameKey="name" innerRadius={85} strokeWidth={5}>
+				<Pie data={chartData} dataKey="diff" nameKey="name" innerRadius={60} outerRadius={80} strokeWidth={5}>
 					<Label
 						content={({ viewBox }) => {
 							if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
