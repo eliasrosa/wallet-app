@@ -35,10 +35,9 @@ export function WalletEvolutionChart({ data }: Props) {
 
 	return (
 		<ChartContainer config={config} className="mx-auto w-full max-h-[300px]">
-			<BarChart accessibilityLayer data={data}>
+			<BarChart accessibilityLayer data={data} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
 				<CartesianGrid vertical={false} />
 				<XAxis dataKey="month" tickMargin={10} tickLine={false} axisLine={false} tickFormatter={(value) => value} />
-				<ChartLegend content={<ChartLegendContent />} />
 				<ChartTooltip cursor={false} content={<WalletEvolutionChartTooltipContent />} />
 				{config &&
 					Object.keys(config).map((key) => (
@@ -50,6 +49,7 @@ export function WalletEvolutionChart({ data }: Props) {
 							fill={config[key as keyof typeof config].fill}
 						/>
 					))}
+				<ChartLegend className="relative top-4" content={<ChartLegendContent />} />
 			</BarChart>
 		</ChartContainer>
 	)
