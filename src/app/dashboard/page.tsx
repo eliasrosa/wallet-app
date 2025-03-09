@@ -14,7 +14,7 @@ export default function Page() {
 					<SidebarTrigger />
 					<ModeToggle />
 				</header>
-				<div className="grid auto-rows-min gap-4 p-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+				<div className="grid auto-rows-min gap-4 p-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-6">
 					<WalletTickerTypeGoalCard />
 					<WalletBalanceCard />
 					<WalletEvolutionCard className="sm:col-span-2" />
