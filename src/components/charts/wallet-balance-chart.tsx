@@ -1,6 +1,6 @@
 'use client'
 
-import { ChartContainer, ChartTooltip } from '@/components/ui/chart'
+import { ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip } from '@/components/ui/chart'
 import { TickerTypeColor, TickerTypeLabel } from '@/enums/ticker-enum'
 import { toPercent } from '@/lib/number'
 import { Label, Pie, PieChart } from 'recharts'
@@ -45,10 +45,10 @@ export function WalletBalanceChart({ data }: Props) {
 	const { chartData, diffPercent } = calculeWalletBalanceChartData(data)
 
 	return (
-		<ChartContainer config={{}} className="mx-auto aspect-square max-h-[250px]">
+		<ChartContainer config={{}} className="mx-auto aspect-square max-h-[300px]">
 			<PieChart>
 				<ChartTooltip cursor={false} content={<WalletBalanceChartTooltipContent />} />
-				<Pie data={chartData} dataKey="diff" nameKey="name" innerRadius={80} strokeWidth={5}>
+				<Pie data={chartData} dataKey="diff" nameKey="name" innerRadius={85} strokeWidth={5}>
 					<Label
 						content={({ viewBox }) => {
 							if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
@@ -66,6 +66,7 @@ export function WalletBalanceChart({ data }: Props) {
 						}}
 					/>
 				</Pie>
+				{/* <ChartLegend className="mt-5" content={<ChartLegendContent />} /> */}
 			</PieChart>
 		</ChartContainer>
 	)
