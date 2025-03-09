@@ -44,6 +44,9 @@ body {
 		--success: 160 60% 50%;
 		--warning: 40 100% 50%;
 		--danger: 0 62.8% 50%;
+
+		--chart-wallet: 160 60% 50%;
+		--chart-goal: 0 62.8% 50%;
 	}
 	.dark {
 		--background: 240 10% 3.9%;
@@ -81,6 +84,8 @@ body {
 		--success: 160 60% 50%;
 		--warning: 40 100% 50%;
 		--danger: 0 62.8% 50%;
+		--chart-wallet: 160 60% 50%;
+		--chart-goal: 0 62.8% 50%;
 	}
 }
 
