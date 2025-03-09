@@ -23,7 +23,7 @@ export const WalletEvolutionCard = React.forwardRef<HTMLDivElement, React.HTMLAt
 			<Card className={className} {...props}>
 				<CardHeader>
 					<CardTitle>Evolução Patrimonial</CardTitle>
-					<CardDescription>Acompanhe a evolução do seu patrimônio nos ultimos 12 meses</CardDescription>
+					<CardDescription>Acompanhe a evolução do seu patrimônio nos últimos 12 meses</CardDescription>
 				</CardHeader>
 				<CardContent>
 					<WalletEvolutionChart data={data} />

@@ -35,16 +35,15 @@ export const WalletBalanceCard = React.forwardRef<HTMLDivElement, React.HTMLAttr
 		return (
 			<Card className={className} {...props}>
 				<CardHeader>
-					<CardTitle>Equilíbrio da Carteira</CardTitle>
-					<CardDescription>Exibe o quanto saúdavel está sua carteira</CardDescription>
+					<CardTitle>Distribuição da Carteira</CardTitle>
+					<CardDescription>Mostra, em porcentagem, o desvio em relação à sua estratégia</CardDescription>
 				</CardHeader>
 				<CardContent>
 					<WalletBalanceChart data={data} />
 				</CardContent>
 				<CardFooter className="text-sm">
 					<div className="leading-none text-muted-foreground font-medium text-center">
-						Serão necessários aproximadamente <strong>{toCurrency(diffTotal)}</strong> em novos aportes para o
-						rebalanceamento ideal
+						Para um balanceamento ideal, é necessário um aporte adicional de <strong>{toCurrency(diffTotal)}</strong>
 					</div>
 				</CardFooter>
 			</Card>
