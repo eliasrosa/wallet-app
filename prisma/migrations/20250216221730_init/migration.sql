@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "TickerType" AS ENUM ('STOCK', 'FII', 'ETF', 'CDB');
+CREATE TYPE "TickerType" AS ENUM ('STOCK', 'FII', 'ETF', 'RF');
 
 -- CreateEnum
 CREATE TYPE "TickerDataSourceEnum" AS ENUM ('INVEST10');

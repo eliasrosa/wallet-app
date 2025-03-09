@@ -17,7 +17,7 @@ enum TickerType {
   STOCK
   FII
   ETF
-  CDB
+  RF
 }
 
 model Ticker {
