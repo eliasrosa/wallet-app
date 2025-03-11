@@ -16,7 +16,7 @@ export const sidebar = {
 			items: [
 				{
 					title: 'Geral',
-					url: '#',
+					url: 'dashboard',
 					isActive: true,
 					icon: ChartNoAxesCombinedIcon,
 				},

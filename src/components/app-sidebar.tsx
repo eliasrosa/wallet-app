@@ -12,7 +12,7 @@ import {
 	SidebarRail,
 } from '@/components/ui/sidebar'
 
-import { sidebar } from '@/app/menu'
+import { sidebar } from '@/app/sidebar'
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 	return (
