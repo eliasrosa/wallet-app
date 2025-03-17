@@ -28,3 +28,6 @@ b3-import-movements: ## Import movements from B3
 
 demo: ## Run the demo
 	docker compose exec -it node npx tsx ./src/commands/DemoCommand.ts
+
+ngrok: ## Start ngrok
+	ngrok http http://localhost:8000
