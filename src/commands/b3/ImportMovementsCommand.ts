@@ -1,35 +1,26 @@
 import { container } from '@/app'
-import type { ReadXlsxFileRespositoryInterface } from '@/repositories/file-b3/interfaces/ReadXlsxFileRespositoryInterface'
 import type { ImportFileMovementsService } from '@/services/b3/ImportFileMovementsService'
 import { TYPES } from '@/types'
+import { command, number, positional, run, string } from 'cmd-ts'
 
-export class ImportMovementsCommand {
-	private readXlsxFileRespository: ReadXlsxFileRespositoryInterface
-	private importFileMovementsService: ImportFileMovementsService
+const handler = async (args: { user: string; year: number }) => {
+	const filePath = `data/users/${args.user}/movements-${args.year.toString()}.xlsx`
+	const service: ImportFileMovementsService = container.get(TYPES.ImportFileMovementsService)
 
-	constructor() {
-		this.readXlsxFileRespository = container.get<ReadXlsxFileRespositoryInterface>(
-			TYPES.ReadXlsxFileRespositoryInterface,
-		)
+	await service.execute(filePath)
 
-		this.importFileMovementsService = container.get<ImportFileMovementsService>(TYPES.ImportFileMovementsService)
-	}
-
-	async execute(): Promise<void> {
-		console.log('importFileMovementsService', this)
-
-		const filesPath = await this.readXlsxFileRespository.listFiles('data/b3/movements')
-
-		for await (const filePath of filesPath) {
-			await this.importFileMovementsService.execute(filePath)
-		}
-	}
+	process.exit(0)
 }
 
-new ImportMovementsCommand()
-	.execute()
-	.then(async () => {})
-	.catch(async (e) => {
-		console.error(e)
-		process.exit(1)
-	})
+const cmd = command({
+	name: 'b3-import-movements',
+	description: 'B3 Import movements from XLSX file',
+	version: '1.0.0',
+	args: {
+		user: positional({ type: string, description: 'User to import the movements', displayName: 'user' }),
+		year: positional({ type: number, description: 'Year of the movements to import', displayName: 'year' }),
+	},
+	handler,
+})
+
+run(cmd, process.argv.slice(2))
