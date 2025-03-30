@@ -140,8 +140,8 @@ model WalletTicker {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  wallet Wallet @relation(fields: [walletId], references: [id])
-  ticker Ticker @relation(fields: [tickerId], references: [id])
+  wallet Wallet @relation(fields: [walletId], references: [id], onDelete: Cascade)
+  ticker Ticker @relation(fields: [tickerId], references: [id], onDelete: Cascade)
 
   @@unique([walletId, tickerId])
   @@index([walletId, isGoalFixed])

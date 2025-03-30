@@ -3,8 +3,6 @@ import { TickerRepository } from '@/repositories/database/TickerRepository'
 import { RecalculeGoalsService } from '@/services/wallet/RecalculeGoalsService'
 import { TYPES } from '@/types'
 import { PrismaClient, TickerType } from '@prisma/client'
-import { ImportDividendsCommand } from './b3/ImportDividendsCommand'
-import { ImportMovementsCommand } from './b3/ImportMovementsCommand'
 import type { ImportTickerDataCommand } from './ticker/ImportTickerDataCommand'
 
 const prisma = new PrismaClient()
@@ -14,47 +12,22 @@ class DemoCommand {
 		// clear database
 		// await prisma.dividend.deleteMany()
 		// await prisma.movement.deleteMany()
+		// await prisma.walletTicker.deleteMany()
+		// await prisma.wallet.deleteMany()
 
-		await prisma.walletTicker.deleteMany()
-		await prisma.wallet.deleteMany()
-
-		// import b3 movements and dividends
-		await new ImportDividendsCommand().execute()
-		await new ImportMovementsCommand().execute()
+		// clear
+		// import movements
+		// import dividends
+		// create wallet
+		// add tickers to wallet
+		// set fixed goals
+		// update wallet goals
+		// import ticker data by wallet
 
 		// TODO: create wallet service and repository
-		const wallet = await prisma.wallet.create({
-			data: {
-				name: 'My Wallet',
-				goalFII: 0.25,
-				goalStock: 0.25,
-				goalETF: 0.25,
-				goalRF: 0.25,
-			},
-		})
 
 		// TODO: attach tickers to wallet (service and repository)
-		const tickers = (await new TickerRepository().getAll()).map((ticker) => {
-			return {
-				goal: 0,
-				isGoalFixed: false,
-				tickerId: ticker.id,
-				walletId: wallet.id,
-			}
-		})
 
-		await prisma.walletTicker.createMany({ data: tickers })
-
-		// set fixed goals
-		await prisma.walletTicker.update({
-			where: { tickerId: 'BOVA11', walletId: wallet.id },
-			data: { goal: 0.03, isGoalFixed: true },
-		})
-
-		await prisma.walletTicker.update({
-			where: { tickerId: 'IVVB11', walletId: wallet.id },
-			data: { goal: 0.1, isGoalFixed: true },
-		})
 
 		// update wallet goals
 		await new RecalculeGoalsService().execute(wallet, TickerType.FII)

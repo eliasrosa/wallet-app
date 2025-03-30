@@ -31,7 +31,7 @@ b3-import-movements: ## Import movements from B3
 	docker compose exec -it node npm run b3:import-movements -- 1 2025
 
 demo: ## Run the demo
-	docker compose exec -it node npx tsx ./src/commands/DemoCommand.ts
+	docker compose exec -it node npx tsx ./src/commands/demo/CreateWalletCommand.ts -- Wallet
 
 ngrok: ## Start ngrok
 	ngrok http http://localhost:8000

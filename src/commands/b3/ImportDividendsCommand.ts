@@ -8,6 +8,8 @@ const handler = async (args: { user: string; year: number }) => {
 	const service: ImportFileDividendsService = container.get(TYPES.ImportFileDividendsService)
 
 	await service.execute(filePath)
+
+	process.exit(0)
 }
 
 const cmd = command({
