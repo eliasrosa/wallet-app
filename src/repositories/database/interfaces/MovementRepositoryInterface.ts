@@ -1,8 +1,8 @@
 import type { Movement } from '@prisma/client'
 
 export interface CreateData {
-	hash: string
 	tickerId: string
+	userId: string
 	quantity: number
 	price?: number
 	total?: number
@@ -14,5 +14,5 @@ export interface CreateData {
 
 export interface MovementRepositoryInterface {
 	create(data: CreateData): Promise<Movement>
-	clearAll(): Promise<void>
+	deleteByYear(userId: string, year: number): Promise<void>
 }

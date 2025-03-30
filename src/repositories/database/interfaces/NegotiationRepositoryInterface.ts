@@ -2,6 +2,7 @@ import type { Negotiation } from '@prisma/client'
 
 export interface CreateData {
 	tickerId: string
+	userId: string
 	quantity: number
 	price: number
 	total: number
@@ -15,5 +16,5 @@ export interface CreateData {
 
 export interface NegotiationRepositoryInterface {
 	create(data: CreateData): Promise<Negotiation>
-	clearByUserIdAndYear(userId: string, year: number): Promise<void>
+	deleteByYear(userId: string, year: number): Promise<void>
 }

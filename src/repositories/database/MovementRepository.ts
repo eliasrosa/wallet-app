@@ -1,24 +1,22 @@
+import { prisma } from '@/lib/prisma'
 import type {
 	CreateData,
 	MovementRepositoryInterface,
 } from '@/repositories/database/interfaces/MovementRepositoryInterface'
-import { type Movement, PrismaClient } from '@prisma/client'
-
-const prisma = new PrismaClient()
+import type { Movement } from '@prisma/client'
 
 export class MovementRepository implements MovementRepositoryInterface {
 	async create(data: CreateData): Promise<Movement> {
 		console.log('MovementRepository.create', data)
-		return prisma.movement.upsert({
-			where: { hash: data.hash },
-			update: {},
-			create: {
-				hash: data.hash,
+
+		return prisma.movement.create({
+			data: {
 				price: data.price,
 				total: data.total,
 				quantity: data.quantity,
 				isCredit: data.isCredit,
 				movementAt: data.movementAt,
+				user: { connect: { id: data.userId } },
 				ticker: { connect: { id: data.tickerId } },
 				movementType: { connect: { id: data.movementTypeId } },
 				institution: { connect: { id: data.institutionId } },
@@ -26,8 +24,15 @@ export class MovementRepository implements MovementRepositoryInterface {
 		})
 	}
 
-	async clearAll(): Promise<void> {
-		console.log('DividendTypeRepository.clearAll')
-		await prisma.movement.deleteMany()
+	async deleteByYear(userId: string, year: number): Promise<void> {
+		await prisma.movement.deleteMany({
+			where: {
+				userId,
+				movementAt: {
+					gte: new Date(`${year}-01-01`),
+					lte: new Date(`${year}-12-31`),
+				},
+			},
+		})
 	}
 }

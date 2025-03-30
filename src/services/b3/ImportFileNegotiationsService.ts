@@ -21,8 +21,8 @@ export class ImportFileNegotiationsService {
 	@inject(TYPES.NegotiationRepositoryInterface)
 	private negotiationRepository!: NegotiationRepositoryInterface
 
-	async execute(filePath: string): Promise<void> {
-		await this.negotiationRepository.clearByUserIdAndYear('1', 2023)
+	async execute(filePath: string, userId: string, year: number): Promise<void> {
+		await this.negotiationRepository.deleteByYear(userId, year)
 
 		const fileStream = fs.createReadStream(filePath)
 		const rows = await this.readXlsxFileRespository.readNegotiationsFile(fileStream)
@@ -33,6 +33,7 @@ export class ImportFileNegotiationsService {
 			const movementType = await this.movementTypeRepository.findOrCreate(row.movementTypeName)
 
 			await this.negotiationRepository.create({
+				userId,
 				tickerId: ticker.id,
 				price: row.price,
 				total: row.total,

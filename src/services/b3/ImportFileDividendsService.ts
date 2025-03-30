@@ -1,5 +1,4 @@
 import fs from 'node:fs'
-import objectHash from 'object-hash'
 
 import { inject, injectable } from '@/app'
 import type { DividendRepositoryInterface } from '@/repositories/database/interfaces/DividendRepositoryInterface'
@@ -22,8 +21,9 @@ export class ImportFileDividendsService {
 	@inject(TYPES.TickerRepositoryInterface)
 	private tickerRepository!: TickerRepositoryInterface
 
-	async execute(filePath: string): Promise<void> {
-		console.log(`File path: ${filePath}`)
+	async execute(filePath: string, userId: string, year: number): Promise<void> {
+		await this.dividendRepository.deleteByYear(userId, year)
+
 		const fileStream = fs.createReadStream(filePath)
 		const rows = await this.readXlsxFileRespository.readDividendFile(fileStream)
 
@@ -32,7 +32,8 @@ export class ImportFileDividendsService {
 			const institution = await this.institutionRepository.findOrCreate(row.institutionName)
 			const dividendType = await this.dividendTypeRepository.findOrCreate(row.typeName)
 
-			const data = {
+			await this.dividendRepository.create({
+				userId: userId,
 				total: row.total,
 				price: row.price,
 				tickerId: ticker.id,
@@ -40,10 +41,7 @@ export class ImportFileDividendsService {
 				paymentAt: row.paymentAt,
 				institutionId: institution.id,
 				dividendTypeId: dividendType.id,
-			}
-
-			const hash = objectHash(data)
-			await this.dividendRepository.create({ ...data, hash })
+			})
 		}
 	}
 }

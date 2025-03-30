@@ -1,5 +1,4 @@
 import fs from 'node:fs'
-import objectHash from 'object-hash'
 
 import { inject, injectable } from '@/app'
 import type { InstitutionRepositoryInterface } from '@/repositories/database/interfaces/InstitutionRepositoryInterface'
@@ -22,7 +21,9 @@ export class ImportFileMovementsService {
 	@inject(TYPES.ReadXlsxFileRespositoryInterface)
 	private readXlsxFileRespository!: ReadXlsxFileRespositoryInterface
 
-	async execute(filePath: string): Promise<void> {
+	async execute(filePath: string, userId: string, year: number): Promise<void> {
+		await this.movementRepository.deleteByYear(userId, year)
+
 		const fileStream = fs.createReadStream(filePath)
 		const rows = await this.readXlsxFileRespository.readMovementFile(fileStream)
 
@@ -31,7 +32,8 @@ export class ImportFileMovementsService {
 			const institution = await this.institutionRepository.findOrCreate(row.institutionName)
 			const movementType = await this.movementTypeRepository.findOrCreate(row.movementTypeName)
 
-			const data = {
+			await this.movementRepository.create({
+				userId,
 				tickerId: ticker.id,
 				quantity: row.quantity,
 				price: row.price,
@@ -40,10 +42,7 @@ export class ImportFileMovementsService {
 				movementTypeId: movementType.id,
 				institutionId: institution.id,
 				movementAt: row.movementAt,
-			}
-
-			const hash = objectHash(data)
-			await this.movementRepository.create({ ...data, hash })
+			})
 		}
 	}
 }

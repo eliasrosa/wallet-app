@@ -7,7 +7,7 @@ const handler = async (args: { user: string; year: number }) => {
 	const filePath = `data/users/${args.user}/dividends-${args.year.toString()}.xlsx`
 	const service: ImportFileDividendsService = container.get(TYPES.ImportFileDividendsService)
 
-	await service.execute(filePath)
+	await service.execute(filePath, args.user, args.year)
 
 	process.exit(0)
 }
