@@ -13,6 +13,7 @@ import { DividendTypeRepository } from './repositories/database/DividendTypeRepo
 import { InstitutionRepository } from './repositories/database/InstitutionRepository'
 import { MovementRepository } from './repositories/database/MovementRepository'
 import { MovementTypeRepository } from './repositories/database/MovementTypeRepository'
+import { NegotiationRepository } from './repositories/database/NegotiationRepository'
 import { TickerDataRepository } from './repositories/database/TickerDataRepository'
 import { TickerRepository } from './repositories/database/TickerRepository'
 import type { DividendRepositoryInterface } from './repositories/database/interfaces/DividendRepositoryInterface'
@@ -20,12 +21,14 @@ import type { DividendTypeRepositoryInterface } from './repositories/database/in
 import type { InstitutionRepositoryInterface } from './repositories/database/interfaces/InstitutionRepositoryInterface'
 import type { MovementRepositoryInterface } from './repositories/database/interfaces/MovementRepositoryInterface'
 import type { MovementTypeRepositoryInterface } from './repositories/database/interfaces/MovementTypeRepositoryInterface'
+import type { NegotiationRepositoryInterface } from './repositories/database/interfaces/NegotiationRepositoryInterface'
 import type { TickerDataRepositoryInterface } from './repositories/database/interfaces/TickerDataRepositoryInterface'
 import type { TickerRepositoryInterface } from './repositories/database/interfaces/TickerRepositoryInterface'
 import type { DataFiiRepositoryInterface } from './repositories/ticker/interfaces/DataFiiRepositoryInterface'
 import { DataFiiRepository } from './repositories/ticker/invest10/DataFiiRepository'
 import { ImportFileDividendsService } from './services/b3/ImportFileDividendsService'
 import { ImportFileMovementsService } from './services/b3/ImportFileMovementsService'
+import { ImportFileNegotiationsService } from './services/b3/ImportFileNegotiationsService'
 import { ImportFiiService } from './services/ticker/ImportFiiService'
 
 const container = new Container()
@@ -38,6 +41,7 @@ container.bind<DividendRepositoryInterface>(TYPES.DividendRepositoryInterface).t
 container.bind<MovementRepositoryInterface>(TYPES.MovementRepositoryInterface).to(MovementRepository)
 container.bind<MovementTypeRepositoryInterface>(TYPES.MovementTypeRepositoryInterface).to(MovementTypeRepository)
 container.bind<TickerDataRepositoryInterface>(TYPES.TickerDataRepositoryInterface).to(TickerDataRepository)
+container.bind<NegotiationRepositoryInterface>(TYPES.NegotiationRepositoryInterface).to(NegotiationRepository)
 
 // file repositories
 container.bind<ReadXlsxFileRespositoryInterface>(TYPES.ReadXlsxFileRespositoryInterface).to(ReadXlsxFileRespository)
@@ -46,9 +50,10 @@ container.bind<ReadXlsxFileRespositoryInterface>(TYPES.ReadXlsxFileRespositoryIn
 container.bind<DataFiiRepositoryInterface>(TYPES.DataFiiRepositoryInterface).to(DataFiiRepository)
 
 // services
+container.bind<ImportFiiService>(TYPES.ImportFiiService).to(ImportFiiService)
 container.bind<ImportFileMovementsService>(TYPES.ImportFileMovementsService).to(ImportFileMovementsService)
 container.bind<ImportFileDividendsService>(TYPES.ImportFileDividendsService).to(ImportFileDividendsService)
-container.bind<ImportFiiService>(TYPES.ImportFiiService).to(ImportFiiService)
+container.bind<ImportFileNegotiationsService>(TYPES.ImportFileNegotiationsService).to(ImportFileNegotiationsService)
 
 // commands
 container.bind<ImportTickerDataCommand>(TYPES.ImportTickerDataCommand).to(ImportTickerDataCommand)

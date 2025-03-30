@@ -22,7 +22,7 @@ export class TickerRepository implements TickerRepositoryInterface {
 		return ticker
 	}
 
-	async findOrCreate(symbol: string, name: string): Promise<Ticker> {
+	async findOrCreate(symbol: string, name?: string): Promise<Ticker> {
 		console.log('TickerRepository.findOrCreate', { symbol, name })
 		const type = this.getTickerType(symbol)
 

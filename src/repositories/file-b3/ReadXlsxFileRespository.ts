@@ -5,6 +5,7 @@ import type {
 	ReadXlsxFileRespositoryInterface,
 	RowDividendFileData,
 	RowMovementFileData,
+	RowNotificationFileData,
 } from '@/repositories/file-b3/interfaces/ReadXlsxFileRespositoryInterface'
 import readXlsxFile from 'read-excel-file/node'
 
@@ -73,6 +74,82 @@ export class ReadXlsxFileRespository implements ReadXlsxFileRespositoryInterface
 			prop: 'total',
 			type: String,
 		},
+	}
+
+	private schemaNegotiationsFile = {
+		'Data do Negócio': {
+			prop: 'negotiationAt',
+			type: String,
+		},
+		'Tipo de Movimentação': {
+			prop: 'movementTypeName',
+			type: String,
+		},
+		Mercado: {
+			prop: 'market',
+			type: String,
+		},
+		'Prazo/Vencimento': {
+			prop: 'dueDate',
+			type: String,
+		},
+		Instituição: {
+			prop: 'institutionName',
+			type: String,
+		},
+		'Código de Negociação': {
+			prop: 'negotiationCode',
+			type: String,
+		},
+		Quantidade: {
+			prop: 'quantity',
+			type: String,
+		},
+		Preço: {
+			prop: 'price',
+			type: String,
+		},
+		Valor: {
+			prop: 'total',
+			type: String,
+		},
+	}
+
+	async readNegotiationsFile(file: Stream | Buffer): Promise<RowNotificationFileData[]> {
+		const { rows, errors } = await readXlsxFile(file, {
+			schema: this.schemaNegotiationsFile,
+		})
+		if (errors.length > 0) {
+			throw new Error(`ReadXlsxFileRespository.readNegotiationsFile: ${JSON.stringify(errors)}`)
+		}
+
+		return rows.map((row) => {
+			const negotiationAt = new Date(Date.parse((row.negotiationAt as string).split('/').reverse().join('-')))
+			const movementTypeName = row.movementTypeName as string
+			const market = row.market as string
+			const dueDate = /^\d{2}\/\d{2}\/\d{4}$/.test(row.dueDate as string)
+				? new Date(Date.parse((row.negotiationAt as string).split('/').reverse().join('-')))
+				: undefined
+			const institutionName = row.institutionName as string
+			const negotiationCode = row.negotiationCode as string
+			const quantity = Number.parseFloat(row.quantity as string) || 0
+			const price = Number.parseFloat(row.price as string) || 0
+			const total = Number.parseFloat(row.total as string) || 0
+			const tickerId = market === 'Mercado Fracionário' ? negotiationCode.slice(0, -1) : negotiationCode
+
+			return {
+				negotiationAt,
+				movementTypeName,
+				market,
+				dueDate,
+				institutionName,
+				negotiationCode,
+				tickerId,
+				quantity,
+				price,
+				total,
+			}
+		})
 	}
 
 	async readDividendFile(file: Stream | Buffer): Promise<RowDividendFileData[]> {

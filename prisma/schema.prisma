@@ -31,7 +31,7 @@ enum TickerType {
 
 model Ticker {
   id           String         @id @unique(sort: Asc)
-  name         String
+  name         String?
   type         TickerType?
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
@@ -39,6 +39,7 @@ model Ticker {
   movements    Movement[]
   datas        TickerData[]
   walletTicker WalletTicker[]
+  Negotiation  Negotiation[]
 }
 
 enum TickerDataSourceEnum {
@@ -64,12 +65,13 @@ model TickerData {
 }
 
 model Institution {
-  id        String     @id @default(cuid())
-  name      String     @unique
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  dividends Dividend[]
-  movements Movement[]
+  id          String        @id @default(cuid())
+  name        String        @unique
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  dividends   Dividend[]
+  movements   Movement[]
+  Negotiation Negotiation[]
 }
 
 model DividendType {
@@ -101,11 +103,12 @@ model Dividend {
 }
 
 model MovementType {
-  id        String     @id @default(cuid())
-  name      String     @unique
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  movements Movement[]
+  id          String        @id @default(cuid())
+  name        String        @unique
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  movements   Movement[]
+  Negotiation Negotiation[]
 }
 
 model Movement {
@@ -154,4 +157,24 @@ model WalletTicker {
 
   @@unique([walletId, tickerId])
   @@index([walletId, isGoalFixed])
+}
+
+model Negotiation {
+  id              String    @id @default(cuid())
+  tickerId        String
+  quantity        Float
+  price           Float
+  total           Float
+  market          String
+  institutionId   String
+  movementTypeId  String
+  negotiationCode String
+  negotiationAt   DateTime
+  dueDate         DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  ticker       Ticker       @relation(fields: [tickerId], references: [id])
+  institution  Institution  @relation(fields: [institutionId], references: [id])
+  movementType MovementType @relation(fields: [movementTypeId], references: [id])
 }

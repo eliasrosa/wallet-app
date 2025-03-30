@@ -7,7 +7,7 @@ CREATE TYPE "TickerDataSourceEnum" AS ENUM ('INVEST10');
 -- CreateTable
 CREATE TABLE "Ticker" (
     "id" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
+    "name" TEXT,
     "type" "TickerType",
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -116,12 +116,32 @@ CREATE TABLE "Wallet" (
 CREATE TABLE "WalletTicker" (
     "tickerId" TEXT NOT NULL,
     "walletId" TEXT NOT NULL,
-    "goal" DOUBLE PRECISION,
-    "isGoalFixed" BOOLEAN NOT NULL,
+    "goal" DOUBLE PRECISION NOT NULL,
+    "isGoalFixed" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "WalletTicker_pkey" PRIMARY KEY ("tickerId")
+);
+
+-- CreateTable
+CREATE TABLE "Negotiation" (
+    "id" TEXT NOT NULL,
+    "tickerId" TEXT NOT NULL,
+    "quantity" DOUBLE PRECISION NOT NULL,
+    "price" DOUBLE PRECISION NOT NULL,
+    "total" DOUBLE PRECISION NOT NULL,
+    "market" TEXT NOT NULL,
+    "institutionId" TEXT NOT NULL,
+    "movementTypeId" TEXT NOT NULL,
+    "negotiationCode" TEXT NOT NULL,
+    "negotiationAt" TIMESTAMP(3) NOT NULL,
+    "dueDate" TIMESTAMP(3),
+    "hash" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Negotiation_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -132,9 +152,6 @@ CREATE UNIQUE INDEX "Institution_name_key" ON "Institution"("name");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "DividendType_name_key" ON "DividendType"("name");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Dividend_hash_key" ON "Dividend"("hash");
 
 -- CreateIndex
 CREATE INDEX "Dividend_hash_idx" ON "Dividend"("hash");
@@ -156,6 +173,12 @@ CREATE INDEX "WalletTicker_walletId_isGoalFixed_idx" ON "WalletTicker"("walletId
 
 -- CreateIndex
 CREATE UNIQUE INDEX "WalletTicker_walletId_tickerId_key" ON "WalletTicker"("walletId", "tickerId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Negotiation_hash_key" ON "Negotiation"("hash");
+
+-- CreateIndex
+CREATE INDEX "Negotiation_hash_idx" ON "Negotiation"("hash");
 
 -- AddForeignKey
 ALTER TABLE "TickerData" ADD CONSTRAINT "TickerData_tickerId_fkey" FOREIGN KEY ("tickerId") REFERENCES "Ticker"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -179,7 +202,16 @@ ALTER TABLE "Movement" ADD CONSTRAINT "Movement_institutionId_fkey" FOREIGN KEY 
 ALTER TABLE "Movement" ADD CONSTRAINT "Movement_movementTypeId_fkey" FOREIGN KEY ("movementTypeId") REFERENCES "MovementType"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "WalletTicker" ADD CONSTRAINT "WalletTicker_walletId_fkey" FOREIGN KEY ("walletId") REFERENCES "Wallet"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "WalletTicker" ADD CONSTRAINT "WalletTicker_walletId_fkey" FOREIGN KEY ("walletId") REFERENCES "Wallet"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "WalletTicker" ADD CONSTRAINT "WalletTicker_tickerId_fkey" FOREIGN KEY ("tickerId") REFERENCES "Ticker"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "WalletTicker" ADD CONSTRAINT "WalletTicker_tickerId_fkey" FOREIGN KEY ("tickerId") REFERENCES "Ticker"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Negotiation" ADD CONSTRAINT "Negotiation_tickerId_fkey" FOREIGN KEY ("tickerId") REFERENCES "Ticker"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Negotiation" ADD CONSTRAINT "Negotiation_institutionId_fkey" FOREIGN KEY ("institutionId") REFERENCES "Institution"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Negotiation" ADD CONSTRAINT "Negotiation_movementTypeId_fkey" FOREIGN KEY ("movementTypeId") REFERENCES "MovementType"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

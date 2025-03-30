@@ -7,6 +7,7 @@ const TYPES = {
 	DividendTypeRepositoryInterface: Symbol.for('DividendTypeRepositoryInterface'),
 	MovementTypeRepositoryInterface: Symbol.for('MovementTypeRepositoryInterface'),
 	TickerDataRepositoryInterface: Symbol.for('TickerDataRepositoryInterface'),
+	NegotiationRepositoryInterface: Symbol.for('NegotiationRepositoryInterface'),
 
 	// file repositories
 	ReadXlsxFileRespositoryInterface: Symbol.for('ReadXlsxFileRespositoryInterface'),
@@ -15,9 +16,10 @@ const TYPES = {
 	DataFiiRepositoryInterface: Symbol.for('DataFiiRepositoryInterface'),
 
 	// services
+	ImportFiiService: Symbol.for('ImportFiiService'),
 	ImportFileMovementsService: Symbol.for('ImportFileMovementsService'),
 	ImportFileDividendsService: Symbol.for('ImportFileDividendsService'),
-	ImportFiiService: Symbol.for('ImportFiiService'),
+	ImportFileNegotiationsService: Symbol.for('ImportFileNegotiationsService'),
 
 	// commands
 	ImportTickerDataCommand: Symbol.for('ImportTickerDataCommand'),
