@@ -5,6 +5,9 @@ import { TickerType } from '@prisma/client'
 import { command, positional, run, string } from 'cmd-ts'
 
 const handler = async (args: { walletName: string }) => {
+
+	console.log('Deleting existing demo wallet...')
+	await prisma.wallet.deleteMany()
 	
 	console.log('Creating demo wallet...')
 	const { walletName } = args
