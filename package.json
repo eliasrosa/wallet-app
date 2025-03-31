@@ -10,7 +10,6 @@
 		"lint:fix": "npx @biomejs/biome check --write",
 		"db:migrate": "npx prisma migrate dev",
 		"db:reset": "npx prisma migrate reset --force && npm run db:migrate",
-		"db:reset2": "rm -rf prisma/migrations && npx prisma migrate reset --force && npm run db:migrate -- --name init",
 		"b3:import-dividends": "npx tsx ./src/commands/b3/ImportDividendsCommand.ts",
 		"b3:import-movements": "npx tsx ./src/commands/b3/ImportMovementsCommand.ts",
 		"b3:import-negotiations": "npx tsx ./src/commands/b3/ImportNegotiationsCommand.ts",

@@ -4,15 +4,21 @@ import { RecalculeGoalsService } from '@/services/wallet/RecalculeGoalsService'
 import { TickerType } from '@prisma/client'
 import { command, positional, run, string } from 'cmd-ts'
 
-const handler = async (args: { walletName: string }) => {
-
+const handler = async (args: { userId: string; walletName: string }) => {
 	console.log('Deleting existing demo wallet...')
 	await prisma.wallet.deleteMany()
-	
+
 	console.log('Creating demo wallet...')
 	const { walletName } = args
 	const wallet = await prisma.wallet.create({
-		data: { goalRF: 0.25,	goalETF: 0.25, goalFII: 0.25,	goalStock: 0.25,	name: walletName},
+		data: {
+			goalRF: 0.25,
+			goalETF: 0.25,
+			goalFII: 0.25,
+			goalStock: 0.25,
+			name: walletName,
+			userId: args.userId,
+		},
 	})
 
 	console.log('Creating demo wallet tickers...')
@@ -53,6 +59,7 @@ const cmd = command({
 	description: 'Create a demo wallet',
 	version: '1.0.0',
 	args: {
+		userId: positional({ type: string, description: 'User ID', displayName: 'User ID' }),
 		walletName: positional({ type: string, description: 'Wallet name', displayName: 'wallet' }),
 	},
 	handler,

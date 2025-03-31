@@ -31,8 +31,11 @@ b3-import: ## Import dividends and movements from B3
 	docker compose exec -it node npm run b3:import-negotiations -- 1 2024
 	docker compose exec -it node npm run b3:import-negotiations -- 1 2025
 
-demo: ## Run the demo
-	docker compose exec -it node npx tsx ./src/commands/demo/CreateWalletCommand.ts -- Wallet
+demo-wallet: ## Run the demo
+	docker compose exec -it node npx tsx ./src/commands/demo/CreateWalletCommand.ts -- 1 "Carteira"
+
+demo-user: ## Run the demo
+	docker compose exec -it node npx tsx ./src/commands/demo/CreateUserCommand.ts
 
 ngrok: ## Start ngrok
 	ngrok http http://localhost:8000
