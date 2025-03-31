@@ -44,6 +44,5 @@ services:
       interval: 10s
       retries: 10
 
-
 volumes:
   db-data:

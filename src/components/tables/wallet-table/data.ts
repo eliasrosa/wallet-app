@@ -1,4 +1,3 @@
-
 import type { WalletTicker } from '@prisma/client'
 import type { WalletDataTable } from './columns'
 
@@ -9,12 +8,12 @@ type WalletData = {
 			name: string
 		}
 		averagePrice: number
-		movementTotal: number
-		movementSale: number
-		movementPurchase: number
-		movementQuantityTotal: number
-		movementQuantityPurchase: number
-		movementQuantitySale: number
+		negotiationTotal: number
+		negotiationSale: number
+		negotiationPurchase: number
+		negotiationQuantityTotal: number
+		negotiationQuantityPurchase: number
+		negotiationQuantitySale: number
 	})[]
 }
 
@@ -25,19 +24,17 @@ export const getData = async (walletId: string): Promise<WalletDataTable[]> => {
 		throw new Error('Failed to fetch data')
 	}
 
-	const {data: tickers} = await res.json() as WalletData
-
-	console.log(tickers)
+	const { data: tickers } = (await res.json()) as WalletData
 
 	return tickers.map((ticker) => ({
 		tickerId: ticker.tickerId,
 		walletName: ticker.wallet.name,
 		averagePrice: ticker.averagePrice,
-		movementSale: ticker.movementSale,
-		movementTotal: ticker.movementTotal,
-		movementPurchase: ticker.movementPurchase,
-		movementQuantitySale: ticker.movementQuantitySale,
-		movementQuantityTotal: ticker.movementQuantityTotal,
-		movementQuantityPurchase: ticker.movementQuantityPurchase,
+		negotiationSale: ticker.negotiationSale,
+		negotiationTotal: ticker.negotiationTotal,
+		negotiationPurchase: ticker.negotiationPurchase,
+		negotiationQuantitySale: ticker.negotiationQuantitySale,
+		negotiationQuantityTotal: ticker.negotiationQuantityTotal,
+		negotiationQuantityPurchase: ticker.negotiationQuantityPurchase,
 	}))
 }

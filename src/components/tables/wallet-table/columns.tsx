@@ -5,13 +5,13 @@ import type { ColumnDef } from '@tanstack/react-table'
 export type WalletDataTable = {
 	tickerId: string
 	walletName: string
-  averagePrice: number
-	movementTotal: number
-	movementSale: number
-	movementPurchase: number
-	movementQuantityTotal: number
-	movementQuantityPurchase: number
-	movementQuantitySale: number
+	averagePrice: number
+	negotiationTotal: number
+	negotiationSale: number
+	negotiationPurchase: number
+	negotiationQuantityTotal: number
+	negotiationQuantityPurchase: number
+	negotiationQuantitySale: number
 }
 
 export const columns: ColumnDef<WalletDataTable>[] = [
@@ -25,7 +25,7 @@ export const columns: ColumnDef<WalletDataTable>[] = [
 	},
 	{
 		accessorKey: 'averagePrice',
-    header: () => <div className="text-center">Preço médio</div>,
+		header: () => <div className="text-center">Preço médio</div>,
 		cell: ({ getValue }) => {
 			const amount = Number.parseFloat(getValue() as string)
 			const formatted = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(amount)
@@ -33,8 +33,8 @@ export const columns: ColumnDef<WalletDataTable>[] = [
 		},
 	},
 	{
-		accessorKey: 'movementSale',
-    header: () => <div className="text-center">Venda</div>,
+		accessorKey: 'negotiationSale',
+		header: () => <div className="text-center">Venda</div>,
 		cell: ({ getValue }) => {
 			const amount = Number.parseFloat(getValue() as string)
 			const formatted = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(amount)
@@ -42,8 +42,8 @@ export const columns: ColumnDef<WalletDataTable>[] = [
 		},
 	},
 	{
-		accessorKey: 'movementTotal',
-    header: () => <div className="text-center">Total</div>,
+		accessorKey: 'negotiationTotal',
+		header: () => <div className="text-center">Total</div>,
 		cell: ({ getValue }) => {
 			const amount = Number.parseFloat(getValue() as string)
 			const formatted = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(amount)
@@ -51,8 +51,8 @@ export const columns: ColumnDef<WalletDataTable>[] = [
 		},
 	},
 	{
-		accessorKey: 'movementPurchase',
-    header: () => <div className="text-center">Compra</div>,
+		accessorKey: 'negotiationPurchase',
+		header: () => <div className="text-center">Compra</div>,
 		cell: ({ getValue }) => {
 			const amount = Number.parseFloat(getValue() as string)
 			const formatted = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(amount)
@@ -60,22 +60,22 @@ export const columns: ColumnDef<WalletDataTable>[] = [
 		},
 	},
 	{
-		accessorKey: 'movementQuantitySale',
-    header: () => <div className="text-center">Quantidade Venda</div>,
-    cell: ({ getValue }) => {
+		accessorKey: 'negotiationQuantitySale',
+		header: () => <div className="text-center">Quantidade Venda</div>,
+		cell: ({ getValue }) => {
 			return <div className="text-center">{String(getValue() || 0)}</div>
 		},
 	},
 	{
-		accessorKey: 'movementQuantityTotal',
+		accessorKey: 'negotiationQuantityTotal',
 		header: () => <div className="text-center">Quantidade Total</div>,
-    cell: ({ getValue }) => {
+		cell: ({ getValue }) => {
 			return <div className="text-center">{String(getValue() || 0)}</div>
 		},
 	},
 	{
-		accessorKey: 'movementQuantityPurchase',
-    header: () => <div className="text-center">Quantidade Compra</div>,
+		accessorKey: 'negotiationQuantityPurchase',
+		header: () => <div className="text-center">Quantidade Compra</div>,
 		cell: ({ getValue }) => {
 			return <div className="text-center">{String(getValue() || 0)}</div>
 		},
