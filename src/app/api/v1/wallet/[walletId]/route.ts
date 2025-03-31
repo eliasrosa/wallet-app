@@ -69,8 +69,7 @@ export const GET = async (req: NextApiRequest, { params }: Params) => {
 
 			const averagePrice = negotiationTotal.quantity > 0 ? negotiationTotal.total / negotiationTotal.quantity : 0
 
-			return {
-				...ticker,
+			const metrics = {
 				averagePrice,
 				negotiationTotal: negotiationTotal.total,
 				negotiationSale: negotiationSale._sum.total || 0,
@@ -80,6 +79,8 @@ export const GET = async (req: NextApiRequest, { params }: Params) => {
 				negotiationQuantitySale: negotiationSale._sum.quantity || 0,
 				movementQuantityUnfolding: movementUnfolding._sum.quantity || 0,
 			}
+
+			return { ...ticker, metrics }
 		}),
 	)
 

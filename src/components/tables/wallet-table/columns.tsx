@@ -25,6 +25,10 @@ export const columns: ColumnDef<WalletDataTable>[] = [
 		header: 'Carteira',
 	},
 	{
+		accessorKey: 'tickerType',
+		header: 'Tipo',
+	},
+	{
 		accessorKey: 'averagePrice',
 		header: () => <div className="text-center">Preço médio</div>,
 		cell: ({ getValue }) => {
