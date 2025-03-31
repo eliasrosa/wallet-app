@@ -12,6 +12,7 @@ export type WalletDataTable = {
 	negotiationQuantityTotal: number
 	negotiationQuantityPurchase: number
 	negotiationQuantitySale: number
+	movementQuantityUnfolding: number
 }
 
 export const columns: ColumnDef<WalletDataTable>[] = [
@@ -76,6 +77,13 @@ export const columns: ColumnDef<WalletDataTable>[] = [
 	{
 		accessorKey: 'negotiationQuantityPurchase',
 		header: () => <div className="text-center">Quantidade Compra</div>,
+		cell: ({ getValue }) => {
+			return <div className="text-center">{String(getValue() || 0)}</div>
+		},
+	},
+	{
+		accessorKey: 'movementQuantityUnfolding',
+		header: () => <div className="text-center">Quantidade Desdobro</div>,
 		cell: ({ getValue }) => {
 			return <div className="text-center">{String(getValue() || 0)}</div>
 		},

@@ -13,16 +13,12 @@ export const GET = async (req: NextApiRequest, { params }: Params) => {
 
 	const negotiationTypeIdPurchase = 'cm8wbry320001rq17q376q5xi' // TODO: Move to env variable
 	const negotiationTypeIdSale = 'cm8wbs0un00cprq2ylqppyoe2' // TODO: Move to env variable
+	const movementTypeIdUnfolding = 'cm8wbru3t00sarqxrgv4g9gm7' // TODO: Move to env variable
 
 	// Get the wallet tickers from the database
 	const walletTickers = await prisma.walletTicker.findMany({
 		where: {
 			walletId,
-			ticker: {
-				type: {
-					equals: 'FII',
-				},
-			},
 		},
 		include: {
 			wallet: {
@@ -58,9 +54,17 @@ export const GET = async (req: NextApiRequest, { params }: Params) => {
 				_sum: { total: true, quantity: true },
 			})
 
+			const movementUnfolding = await prisma.movement.aggregate({
+				where: { tickerId, movementTypeId: movementTypeIdUnfolding },
+				_sum: { quantity: true },
+			})
+
 			const negotiationTotal = {
 				total: (negotiationPurchase._sum.total || 0) - (negotiationSale._sum.total || 0),
-				quantity: (negotiationPurchase._sum.quantity || 0) - (negotiationSale._sum.quantity || 0),
+				quantity:
+					(negotiationPurchase._sum.quantity || 0) +
+					(movementUnfolding._sum.quantity || 0) -
+					(negotiationSale._sum.quantity || 0),
 			}
 
 			const averagePrice = negotiationTotal.quantity > 0 ? negotiationTotal.total / negotiationTotal.quantity : 0
@@ -74,6 +78,7 @@ export const GET = async (req: NextApiRequest, { params }: Params) => {
 				negotiationQuantityTotal: negotiationTotal.quantity,
 				negotiationQuantityPurchase: negotiationPurchase._sum.quantity || 0,
 				negotiationQuantitySale: negotiationSale._sum.quantity || 0,
+				movementQuantityUnfolding: movementUnfolding._sum.quantity || 0,
 			}
 		}),
 	)

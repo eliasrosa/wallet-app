@@ -14,6 +14,7 @@ type WalletData = {
 		negotiationQuantityTotal: number
 		negotiationQuantityPurchase: number
 		negotiationQuantitySale: number
+		movementQuantityUnfolding: number
 	})[]
 }
 
@@ -36,5 +37,6 @@ export const getData = async (walletId: string): Promise<WalletDataTable[]> => {
 		negotiationQuantitySale: ticker.negotiationQuantitySale,
 		negotiationQuantityTotal: ticker.negotiationQuantityTotal,
 		negotiationQuantityPurchase: ticker.negotiationQuantityPurchase,
+		movementQuantityUnfolding: ticker.movementQuantityUnfolding,
 	}))
 }
