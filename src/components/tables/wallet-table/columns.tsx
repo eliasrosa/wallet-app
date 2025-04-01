@@ -36,10 +36,10 @@ export const columns: ColumnDef<WalletDataTable>[] = [
 			return (
 				<QuantityCell
 					{...{
-						total: Number(row.getValue('negotiationQuantityTotal') || 0),
-						purchase: Number(row.getValue('negotiationQuantityPurchase') || 0),
-						sale: Number(row.getValue('negotiationQuantitySale') || 0),
-						unfolding: Number(row.getValue('movementQuantityUnfolding') || 0),
+						total: row.original.negotiationQuantityTotal,
+						purchase: row.original.negotiationQuantityPurchase,
+						sale: row.original.negotiationQuantitySale,
+						unfolding: row.original.movementQuantityUnfolding,
 					}}
 				/>
 			)
@@ -81,32 +81,4 @@ export const columns: ColumnDef<WalletDataTable>[] = [
 			return <div className="text-center">{formatted}</div>
 		},
 	},
-	{
-		accessorKey: 'negotiationQuantitySale',
-		header: () => <div className="text-center">Quantidade Venda</div>,
-		cell: ({ getValue }) => {
-			return <div className="text-center">{String(getValue() || 0)}</div>
-		},
-	},
-	{
-		accessorKey: 'negotiationQuantityTotal',
-		header: () => <div className="text-center">Quantidade Total</div>,
-		cell: ({ getValue }) => {
-			return <div className="text-center">{String(getValue() || 0)}</div>
-		},
-	},
-	{
-		accessorKey: 'negotiationQuantityPurchase',
-		header: () => <div className="text-center">Quantidade Compra</div>,
-		cell: ({ getValue }) => {
-			return <div className="text-center">{String(getValue() || 0)}</div>
-		},
-	},
-	// {
-	// 	accessorKey: 'movementQuantityUnfolding',
-	// 	header: () => <div className="text-center">Quantidade Desdobro</div>,
-	// 	cell: ({ getValue }) => {
-	// 		return <div className="text-center">{String(getValue() || 0)}</div>
-	// 	},
-	// },
 ]

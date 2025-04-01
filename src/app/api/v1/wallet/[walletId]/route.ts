@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/prisma'
+import { orderBy } from 'lodash'
 import type { NextApiRequest } from 'next'
 import { NextResponse } from 'next/server'
 
@@ -84,5 +85,5 @@ export const GET = async (req: NextApiRequest, { params }: Params) => {
 		}),
 	)
 
-	return NextResponse.json({ data: enrichedWalletTickers })
+	return NextResponse.json({ data: orderBy(enrichedWalletTickers, 'metrics.negotiationTotal', 'desc') })
 }
