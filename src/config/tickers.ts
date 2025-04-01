@@ -23,6 +23,7 @@ export const tickers = {
 		],
 		stock: [
 			'CMIG3',
+			'PETR3',
 			'PETR4',
 			'VALE3',
 			'EGIE3',
