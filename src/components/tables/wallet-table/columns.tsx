@@ -1,6 +1,7 @@
 'use client'
 
 import type { ColumnDef } from '@tanstack/react-table'
+import { QuantityCell } from './cell/quantity-cell'
 
 export type WalletDataTable = {
 	tickerId: string
@@ -27,6 +28,22 @@ export const columns: ColumnDef<WalletDataTable>[] = [
 	{
 		accessorKey: 'tickerType',
 		header: 'Tipo',
+	},
+	{
+		accessorKey: 'quantity',
+		header: () => <div className="text-center">Quantidade</div>,
+		cell: ({ row }) => {
+			return (
+				<QuantityCell
+					{...{
+						total: Number(row.getValue('negotiationQuantityTotal') || 0),
+						purchase: Number(row.getValue('negotiationQuantityPurchase') || 0),
+						sale: Number(row.getValue('negotiationQuantitySale') || 0),
+						unfolding: Number(row.getValue('movementQuantityUnfolding') || 0),
+					}}
+				/>
+			)
+		},
 	},
 	{
 		accessorKey: 'averagePrice',
@@ -85,11 +102,11 @@ export const columns: ColumnDef<WalletDataTable>[] = [
 			return <div className="text-center">{String(getValue() || 0)}</div>
 		},
 	},
-	{
-		accessorKey: 'movementQuantityUnfolding',
-		header: () => <div className="text-center">Quantidade Desdobro</div>,
-		cell: ({ getValue }) => {
-			return <div className="text-center">{String(getValue() || 0)}</div>
-		},
-	},
+	// {
+	// 	accessorKey: 'movementQuantityUnfolding',
+	// 	header: () => <div className="text-center">Quantidade Desdobro</div>,
+	// 	cell: ({ getValue }) => {
+	// 		return <div className="text-center">{String(getValue() || 0)}</div>
+	// 	},
+	// },
 ]
